@@ -1,0 +1,121 @@
+This is the official M$-Windows executable installer (Fauxdacious_install.exe), 
+created by the Inno Setup Wizard installer application 
+(https://jrsoftware.org/isinfo.php).  The file "Fauxdacious.iss" is the Inno 
+script used to "compile" this binary.
+
+This is the easiest way to install the latest Fauxdacious version on M$-Windows 
+systems, such as Windows-7 and higher.  For more information about Fauxdacious, 
+see:  https://wildstar84.wordpress.com/fauxdacious/, or for the source-code, 
+see:  https://github.com/wildstar84/fauxdacious and 
+https://github.com/wildstar84/fauxdacious-plugins 
+
+To install Fauxdacious and all it's official plugins, simply:
+
+1)  Download the executable installer binary "Fauxdacious_install.exe" to 
+somewhere on your Windows machine, your desktop perhaps.
+
+2)  Click on it to run the installer.  You will be asked to accept the (open 
+source) license agreement, where to install (the default should work fine), 
+and whether to create a desktop shortcut icon.  If successful, you will be 
+shown the "README" and asked if you want to launch Fauxdacious.
+
+3)  Start & enjoy Fauxdacious Media Player for Windows!
+
+4)  Optional:  go to Settings.Advanced, and at the bottom, enter the following 
+"helper" program names (if not already there) in the 3 "helper program" fields 
+at the bottom:  FauxdaciousUrlHelper.exe FauxdaciousCoverArtHelper.exe, and 
+FauxdaciousLyricsHelper.exe respectively.  This enables several powerful 
+extra Fauxdacious features (see https://wildstar84.github.io/fauxdacious/FAQ.htm) 
+for more details.  This is all optional and unnecessary to run Fauxdacious.  
+NOTE:  The source code for the three helper programs is in the same directory 
+where you installed the program under \bin and are named ".pl" (Perl) instead 
+of ".exe".
+
+For the brave, and open-source purists out there who wish to compile from 
+source instead, see:  http://phoenixcomm.net/~jturner/fauxdacious_buildnotes.htm 
+for how this was built.  You will also need to download and unzip the file: 
+"faud.zip" in C:\, and the file "patches.zip" somewhere and apply all the 
+patches (one-time) as instructed in the link above to create the proper build 
+environment.  NOTE:  The source-code from GitHub (above links) supercedes the 
+Fauxdacious source links in the buildnotes link above.
+
+-------------------------------
+
+Fauxdacious Media Player
+
+    https://wildstar84.wordpress.com/fauxdacious
+    https://audacious-media-player.org
+
+Fauxdacious / Audacious are free and open source software.  
+By installing Fauxdacious, you agree to be bound by various licenses governing 
+its use and redistribution.
+
+LICENSE
+
+Copyright © 2001-2020 Jim Turner, Audacious developers and others.
+
+(A list of the copyright holders is provided in the AUTHORS file.)
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice,
+       this list of conditions, and the following disclaimer.
+
+    2. Redistributions in binary form must reproduce the above copyright notice,
+       this list of conditions, and the following disclaimer in the
+       documentation provided with the distribution.
+
+    This software is provided “as is” and without any warranty, express or
+    implied.  In no event shall the authors be liable for any damages arising
+    from the use of this software.
+
+EXCEPTIONS
+
+The Fauxdacious logo was designed by (c 2015-2020) Jim Turner.  All Fauxdacious 
+changes and patches, including plugin changes are copyright (c 2015-2020) by 
+Jim Turner, with all rights reserved.  You are free to use Fauxdacious subject 
+to the same license and terms as Audacious itself.  
+
+Other than the Fauxdacious and Audacious logos themselves, the images included 
+with Fauxdacious are based on the Tango Icon Library and are in the public 
+domain.
+
+Please note that many of the plugins distributed with Fauxdacious / Audacious 
+are under different licenses.
+
+THIRD-PARTY LICENSES
+
+libguess - a high-speed character set detection library
+
+    Copyright © 2000-2003 Shiro Kawai
+    Copyright © 2005-2010 Yoshiki Yazawa
+    Copyright © 2007-2010 William Pitcock
+
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice,
+       this list of conditions and the following disclaimer.
+
+    2. Redistributions in binary form must reproduce the above copyright notice,
+       this list of conditions and the following disclaimer in the documentation
+       and/or other materials provided with the distribution.
+
+    3. Neither the name of the authors nor the names of its contributors may be
+       used to endorse or promote products derived from this software without
+       specific prior written permission.
+
+    This software is provided by the copyright holders and contributors "as is",
+    and any express or implied warranties, including, but not limited to, the
+    implied warranties of merchantability and fitness for a particular purpose
+    are disclaimed.  In no event shall the copyright owner or contributors be
+    liable for any direct, indirect, incidental, special, exemplary, or
+    consequential damages (including, but not limited to, procurement of
+    substitute goods or services; loss of use, data, or profits; or business
+    interruption) however caused and on any theory of liability, whether in
+    contract, strict liability, or tort (including negligence or otherwise)
+    arising in any way out of the use of this software, even if advised of the
+    possibility of such damage.
