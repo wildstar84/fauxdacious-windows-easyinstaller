@@ -32,7 +32,7 @@ where you installed the program under \bin and are named ".pl" (Perl) instead
 of ".exe".
 
 For the brave, and open-source purists out there who wish to compile from 
-source instead, see:  http://phoenixcomm.net/~jturner/fauxdacious_buildnotes.htm 
+source instead, see:  https://github.com/wildstar84/fauxdacious/blob/master/contrib/win32/fauxdacious_buildnotes.htm 
 for how this was built.  You will also need to download and unzip the file: 
 "faud.zip" in C:\, and the file "patches.zip" somewhere and apply all the 
 patches (one-time) as instructed in the link above to create the proper build 
