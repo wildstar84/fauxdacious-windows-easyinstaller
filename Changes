@@ -1,0 +1,2124 @@
+Version 4.4-final [Updated 07/24/24]:
+
+* helpers - CoverArt:  An emergency hotfix was made to partially REVERT 
+latest commit# 924c3db of 7/20 "Fix regex for titles w/unmatched '('" as this 
+proved to be aregression (sorry!).  A new v4.4-final Windows build will be 
+performed to include this correction, and in future updated heler binaries will 
+bemade available for individual downloads & upgrades, as there are currently no 
+plans to release new Windows builds going forward (for now, as stated here in 
+the Changes file).
+
+* Moonstone:  Add plugin configuration section to the Settings window for 
+gui-configuration of important Moonston plugin parameters.
+
+* GTK-ui:  Make playlist column sort-indicator arrows work for menu-initiated 
+sorts and when multiple playlist tabs exist.  It is intended to also be 
+included in the extra Windows 4.4-final build to correct the aformentioned 
+CoverArt error hotfix.
+
+*** WARNING: LIKELY FINAL BUILD FOR MS-WINDOWS, SEE BELOW: ***
+
+This release is mostly merged Audacious build improvements and modernization 
+to better support Qt-6 and Wayland.  Some minor code tweaks and bug-fixes all 
+over, nothing spectacularly interesting.  The only shiny new stuff added was 
+Audacious's Moonstone(Qt) plugin with some additional Fauxdacious flare!
+
+One bug of note discovered and fixed at the last minute involved the Skins-GTK 
+playlist window sometimes jumping back to the currently playing song when 
+user would scroll up in the playlist window where the playing song scrolled 
+off the window and the user then clicked on another song.  Sorry for not 
+catching this sooner as I hardly ever use the skins interfaces anymore.  The 
+Skins-Qt version appears to not be affected by this bug.  Another annoying 
+issue was the hot-switching feature would silently switch back to the default 
+instance when hot-switching between GTK & Qt versions while running an 
+instance other than the default (using the --new=instancename) option.
+
+One minor omission is the addition and requirement for the Qt*svg libraries, 
+since unfortunately due to Debian's current "t64 fiasco" in Trixie.  I am 
+currently unable to safely upgrade or install pretty much any new software 
+until this drama settles down, and I did not have these libraries installed 
+before this started.  It's also prevented me from installing and testing the 
+Qt6 stuff, but I've added everything Qt6-related that Audacious has, and 
+(if you have it installed), it should work.
+
+Otherwise, for all the gory details, see the changes below and the commits 
+since the v4.3-final release:
+
+On a rather sad note, I'm strongly considering stopping further work on the 
+MS-Windows version as I do not ever use Windows anymore, it's a lot of extra 
+work to rebuild everything in Windows, the plugin libraries (the subset we 
+actuially support) are now ancient and it seems to be very difficult to 
+update them, and I've seen essentially zero uptake or interest in Fauxdacious 
+for Windows. :(  Therefore, if you are using Fauxdacious on your Windows daily 
+driver machine - PLEASE drop me a line letting me know you are using and 
+appreciate it.  If I find there are actually USERS, I'll strongly consider 
+continuing building.  Just need to know my labor is accomplishing something!  
+Otherwise, v4.4-final will likely be the FINAL official Windows release!
+
+Version 4.4-beta1
+
+* Update library versions of libfauxdgui & libfauxdqt to match Audacious.
+
+* Fix libfauxdcore tests suite to actually function.
+
+* Minor fixes to the Opus plugin; and Qt's dark theme, particularly to work 
+better with Qt6.
+
+* Make Qt6 and GTK3 the default versions (use --enable-gtk2 and/or --enable-qt5 
+to build with the older versions).
+
+Version 4.4-devel (as/of 5/23/2024):
+
+* Merge most Audacious bugfix & feature commits for Audacious v.4.4-beta1.  
+Notable exceptions (not merged yet) are GTK & Qt default version commits, 
+pending further testing.
+
+* Add/merge Audacious Moonstone Qt interface plugin after massively refactoring 
+to fix the long-standing issue I had with it leaving you trapped (unable to 
+change back to a different interface without having to shut down and manually 
+edit the Audacious settnigs config file).  Also refactored to have a much more 
+refined UI, expecially by allowing the attached playlist pane to be shaded; 
+and basically bring up to Fauxdacious's quality standards.  I submitted a 
+patch request (#1355) to Audacious addressing these issues and they have 
+ignored it (for almost a year now)!  Therefore, I'm merging it here now (so 
+that my work doesn't go to waste, and our users will have another Audacious 
+feature, but much improved (imho)!  Note:  This will not replace 
+Mini-Fauxdacious, which will remain as-is as the preferred option (and is 
+available in both GTK & Qt versions - whereas Moonstone is Qt-only)!
+
+* statusicon - Tweak code & menu to work more in line w/Audacious versions.
+
+* neon - Fix SSL certificate-handling on Windows version.
+
+* ffaudio - Add support for dynamic icy-tags on streaming stations:
+
+* Fix edge case where video window not restored to proper location.
+
+* Harden a cpl code segments to prevent potential crashes (See commits for 
+details.
+
+* Update copyright year to 2024 & allign versioning to Audacious's.
+
+* Fixed albumart plugins to now properly handle recent in-stream cover-art 
+URLs from some streaming stations (i.iheart.com - I'm lookin' at YOU!) that 
+now include parentheses (previously would fail due to a "shell error").
+
+* Merge numerous other recent Audacious improvements & refinements.  
+Note:  some Audacious issue commits such as "plugins menu entry icon", 
+"effects & visualization icons in menus", "c++20 standard" compliance, and 
+mpg123 "New Format" errors were already done a good while back in Fauxdacious!
+
+* Add Lyrics plugin support for additional lyrics site:  chartlyrics.com in 
+LyricFinder Perl module v1.30+.
+
+Version 4.3-final:
+
+This release is mostly a feature-enhancement release with very few bugs fixed 
+(or found!).  The biggest new feature is the optional toolbar addition to all 
+versions of the Mini-Fauxdacious plugin.  Other notable additions are:  
+
+  * Highlighting the first entry added when adding entries (for easier quick-
+    advance to them to start playing).
+  * Improved handling of multi-line titles, easier access to the Mute 
+    function via middle-button (mouse) and "m" (keyboard).
+  * *Most* all applicable Audacious commits through June 1, 2023.
+  * StreamFinder module upgraded to latest version 2.14, which supports three 
+    new sites:  (Goodpods, Podchaser & RCast).  
+
+Anyway, for full details, see the Changelog below and the GitHub commits since 
+the previous final release.  This release brings us up to date with 
+(and beyond) Audacious's version 4.3.1 final release.  Only notable absence 
+I'm aware of is I have not added their "WM_WINDOW_ROLE" commits yet, as it 
+involves modifying numerous source files and my ancient window-manager 
+(AfterStep) doesn't even see nor need these.  If you're hurting for this, 
+drop me an email and I'll get it done!  We also currently don't support 
+meson builds.
+
+The gory details:
+
+* Transiflex language updates and a shiny new M$-Windows build (as always)!
+
+* Add middle-mousebutton option to toggle mute on the volume-button 
+(addresses Audacious feature-request #1213), but also add "m"-key press option 
+to all versions of Mini-Fauxdacious to also toggle mute.
+
+* Mini-Fauxdacious (GTK):  Merge most recent Qt-version feature additions, 
+namely the optional toolbar and related new plugin-configuration options 
+allowing users to select which buttons they want to appear on it.  
+One can now toggle the toolbar either by double-clicking, or pressing the "t" 
+key when focused.  I gave up (for the moment) trying to get the 
+"Moonstone" background option to work on the GTK-2 version, but it does work 
+on the GTK-3 (and Qt) versions!
+
+* Mini-Fauxdacious (Qt): Add configuration checkboxes allowing user to change 
+which options appear as buttons in the optional toolbar!  Also save separate 
+window widths for the shaded (no toolbar) and unshaded (toolbar) versions of 
+the plugin window making it easier for user to automatically change to a wider 
+window when the toolbar is present (unshaded) if user has a large number of 
+toolbar buttons turned on.  Also make it possible to toggle the toolbar's color 
+scheme style (Audacious "Moonstone" vs. native style) on the fly (without 
+having to restart the plugin).
+
+* Mini-Fauxdacious (Qt): Add a toolbar option to the plugin to show a 
+toolbar at the bottom of the Mini-Fauxdacious window very similar to the one 
+in the main playlist window.  The new option is under the Plugins configuration 
+window for the Mini-Fauxdacious Qt plugin.  The idea is to allow 
+Mini-Fauxdacious the option to work more like Audacious's "Moonstone" plugin, 
+to which Mini-Fauxdacious is Fauxdacious's intended alternative.  If active, 
+the toolbar increases the height of the window by it's height, and by default, 
+is styled after Fauxdacious's current style.  A second checkbox option allows 
+displaying the toolbar in the same color-style as the one in Audacious's 
+Moonstone plugin (a very light grey background).  To toggle the toolbar, the 
+user can either double-click on the plugin window or pressing the "T" key (for 
+Toolbar).  NOTE:  While the toolbar remains (if active) between docking and 
+floating (undocking) the plugin window, it is not possible to toggle while 
+docked, as this would corrupt the window-resizing capabilities of the main 
+playlist window requiring a full restart of Fauxdacious.
+
+* Shrink the height of the toolbar in the main Fauxdacious playlist window 
+(Qt) version by about 6 pixels to save a bit of screen real estate.
+
+* Add "On add, select 1st entry added" [Playlist] option to highlight (select) 
+the newly-added entry (or the first entry in a list of newly-added entries) 
+when adding entries to a playlist.  This (when combined with the "Advance to 
+next selected entry in list" [Playlist] option just above it is also checked) 
+makes it easy for the user (especially if using the Mini-Fauxdacious plugin) 
+to quickly advance to and play the entry he just added by pressing [Next] or 
+Ctrl-B without having to scroll down to the bottom of the playlist, find, and 
+select and play it manually.
+
+Version 4.2.2-final:
+
+This release is a snapshot of v4.3-beta1 as of 2/24/23 in order to do a new 
+Windows release and include most of the improvements since v4.2.1-final, along 
+with many of Audacious's v4.3-beta1 GIT commits as/of 2/03/23 and plugin GIT 
+commits through 2/11/23, since this has shown to be a good stopping-point in 
+both our work and at Audacious.  
+
+Users should also notice better stability in this release, as much work has 
+been put into improving code quality and eliminating crashes, both actual 
+and potential.  All users are strongly encouraged to update!
+
+Other notable improvements are added GTK-3 support, hot-switching between GTK 
+and Qt from within the GUI, and more consistent AlbumArt plugin / info-bar 
+behaviour.
+
+Notably absent (in the Windows version) are support for GTK3, and recent 
+Sid-player and AdPlug plugin enhancements (requires recent libsidplay, etc.).  
+The reason for reverting BACK from v4.3-beta1 to a v4.2.2-final is that we 
+don't want to release a v4.3-final until Audacious ultimately does, but still 
+release another "final" release before then.  For adplug, Fauxdacious for 
+Windows provides the Adplug Classic plugin to handle adplug files.
+
+Change log:
+
+* Added a "Help" tab to the "About" window to display the Fauxdacious man-page.
+
+* Added more workarounds for window-managers, particularly AfterStep (the one 
+the author uses) and have modified the recommended AfterStep "database" 
+settings for best results with Fauxdacious:
+
+Style  "*"                 FocusOnMap
+Style  "Fauxdacious_Qt"    NoFocusOnMap, Sticky, HonorPPosition, HonorGroupHints, HonorTransientHints, HonorExtWMHints
+Style  "Fauxdacious_NF"    NoFocusOnMap, HonorPPosition, HonorExtWMHints
+Style  "* Fauxdacious"     FocusOnMap, Sticky, HonorPPosition, HonorExtWMHints
+Style  "*dacious Video"    NoFocusOnMap, Sticky, HonorPPosition
+Style  "*dacious DVD"      FocusOnMap, Sticky, FocusOnMap, HonorPPosition
+Style  "Mini-Fauxdacious*" NoTitle, NoFrame, NoHandles, Sticky, HonorPPosition
+
+* Merged Qt "restore_floating_dockapps_late" config-file option into GTK to 
+permit starting floating dock windows "late" (AFTER main window is up and 
+focused) to ensure proper window ordering in window-managers' task-bars.
+Also added the option to set this in the Settings gui under [Advanced].
+Fauxdacious Extras section via a check-box.  NOTE: The GTK and Qt have separate 
+values.
+
+* Merged in Audacious's "hotswitch" feature for restarting on the fly - 
+switching between the GTK* and Qt interfaces from within the Preferences GUI!
+(*the GTK interface will be whichever GTK (2 or 3) Fauxdacious was compiled 
+with).  
+
+NOTE:  Fauxdacious must also have been compiled with both the Qt and one of the 
+GTK interfaces.  Unlike Audacious, the Preferences window tells you which GTK 
+(2 or 3) interface you're using or can switch to.  This involved significant 
+restructuring the SDL (video-window) code to work properly between the two 
+interfaces across restarts, making this more complicated to do than it was 
+in Audacious.
+
+NOTE2:  Previous default mode (if -Q or --qt) flag not specified was to start in 
+GTK mode, however as a result of this merge, the default startup mode is now 
+whatever mode Fauxdacious was in when exited.  Therefore, now one should 
+generally start Fauxdacious using one of the flags (-Q or -G) to force the 
+mode Fauxdacious will start up in.
+
+* Switch version to v4.3-beta1 in keeping with Audacious's current release.
+
+Version 4.2.2-beta1 (2/9/2023):
+
+* Improved stability (more crash-proofing) due to numerous cleanups and 
+refactoring of older and suspicious code.
+
+* Fixed more minor issues handling cached cover-art files, particularly ones 
+with odd characters in their names.
+
+# Merged all applicable Audacious commits since last Fauxdacious final release 
+through 2/9/2023.
+
+* Add [Settings].[Song Info].(Fauxdacious Extras)[]"Don't Embed images in tags" 
+checkbox option.  Normally when editing and saving song info (for local song 
+files), when the user adds a file-URI to the Comment: field, Fauxdacious first 
+attempts to store the image data in the file's metatags (along with any other 
+changed tag data).  This will make the cover-art image visible in many other 
+media players, but will usually significantly increase the file's size, which 
+some may find undesirable.  If this option box is checked the image data will 
+not be stored embedded in the file's metatags, but the art-file's URI will 
+remain in the Comment field; and (if the [Save unsavable metadata to file] box 
+is checked) the metadata will be stored in the desired Fauxdacious tag-file.  
+The default is (unchecked) to save the image with the other tag data directly 
+to the file (if possible) as previously (if not then to the tag-file).
+
+Add --enable-gtk3 option to build with GTK-3 and update all code to support 
+both GTK-2 and GTK-3, due to the planned phaseout of GTK-2 support by most 
+distros.
+
+Add hack for flac plugin to check and reject "bad" flac-wrapped ogg streams 
+with incorrectly-formatted metadata that results in a seemingly endless 
+(and fruitless) search for metadata when probing causing display "hangs".
+
+Fix bug in ffaudio plugin that wrongly updated the playing entry's metadata 
+when probing an entry other than the currently-playing one and icy metadata 
+was found.  This dates back to the Aug 12, 2022 commit# ebd614d.
+
+Version 4.2.1-final:
+
+This version should be up to date with (and ahead of) Audacious's GIT commits 
+through at least 11/01/22 (Audacious v4.3-devel), excluding namely the 
+expansion of Audacious' reading playlist file buffer above 16 MB (Aud. Feature 
+#1194) because I don't think this is necessary at this time.  We also left the 
+GTK "alarm" plugin in for now (that they removed).  
+
+The changes in this release are minor, primarily small features involving new 
+Audacious metadata fields, cover-art handling, new "Search and Select" Playlist 
+feature (improved and now in all interfaces), and more efficient handling of 
+cached cover-art images.  This version also supports the latest StreamFinder 
+(v2.01 - compiled into the M$-Windows versions of the helper scripts) which has 
+added support for additional radio-station websites (internet-radio.com, 
+onlineradiobox.com, and rcast.net)!  This seems like a good point for a new 
+final release due to a lull in development activity both here and at Audacious 
+of late, along with the opportunity to make StreamFinder v2.0 available to 
+M$-Windows users.
+
+Change log:
+
+* Handle (parse) metadata from streaming internet stations that are formatted 
+as "artist - title - album - genre".
+
+* Add internet-radio.com and onlineradiobox.com to StreamFinder making many new 
+internet radio-stations (many commercial-free) available for direct-streaming 
+in Fauxdacious (Users must upgrade to StreamFinder v2.0).
+
+* Add file-matching option by Artist for One-off streams (ie. videos and 
+podcasts) to specify a channel-icon for those from frequently-accessed channel 
+creators known to not have one (Rumble has become known for this issue).  
+While at it, discovered and fixed a complex issue with "Duplicate-art hiding" 
+on the GTK side involving podcasts, etc. where sometimes album-images would 
+also show when no channel icon was available, or vice-versa (I continue to try 
+my best to keep the GTK side fully supported, even though I don't use it much 
+anymore).  The GTK side also seems alot more stable, just not quite as pretty!
+
+* Add several new metadata fields Audacious recently added, but also make 'em 
+each work properly with all codecs which support them and editable via the 
+Song-Edit screen.  Fields are:  Publisher, Performer, Composer, and Catalog#.  
+The GTK Song-Edit screen has room so the headers now show which codecs support 
+fields (savability) which have limited codec support (Not room in the Qt vsn).
+
+* Merge Audacious's skins-GTK "Search and Select" dialog into all interfaces, 
+and add a "Jump right to it" checkbox to cause the first entry found to play.  
+This option is needed if wishing to play the selected list, as double-clicking 
+on one of the selected entries always clears the selections!
+
+NOTE1:  "Jump right to it" does not apply if the "copy to new playlist" option 
+is also selected (one can simply select the play option in that playlist to 
+jump to it without clearing the selections in the original playlist).
+
+NOTE2:  This option works well in tandum with the Fauxdacious 
+[Settings].[Playlist]."[] Advance to next selected entry in list" option to 
+play the selected list once, then resume normal play!
+
+* Add [Settings].[Song Info] "Search for images in album-art cache" to enable 
+pulling previously-cached (by the AlbumArt plugins) to be immediately loaded 
+without calling the helper for local song files.  The main side-effect 
+(besides speed) is that the cover-art image is immediately loaded without 
+calling the CoverArtHelper script (just as if the image was in a file matching 
+the song file-name itself, thus allowing for it to appear in the info-bar / 
+Mini-Fauxdacious plugins.
+
+While at it, we also added this code to the AlbumArt plugins to enable them 
+to also check the cache directly without having to call the helper script 
+(increases speed and efficiency).  NOTE:  When using the AlbumArt plugins, the 
+new option is ignored, as the AlbumArt plugins are *supposed* to always check 
+the AlbumArt cache first!
+
+Version 4.2-final:
+
+This version should be up to date with (and ahead of) Audacious's recent v4.2 
+(final) release plus all accepted Audacious GIT commits through at least   
+09/10/22.  This release features numerous minor changes all over.  We also 
+updated all the Transifex translations to make Fauxdacious easier to use for 
+non-English speakers.  
+
+The Album-art plugins saw alot of attention, along with streaming metadata 
+handling.  Several new playlist, menu and appearance options were added, along 
+with a new "-a" command-line option.  Qt saw new theme and icon options.  
+The Song Info Edit window in particular saw significant improvements.  
+
+The Mini-Fauxdacious / info-bar code received significant cleanups reducing the 
+potential for crashes, particularly on the Qt side.  Otherwise, just numerous 
+minor bug-fixes, tweaks, stability improvements, and minor Audacious changes 
+all over!  See the GIT commits for specific details.  We've had to release 
+more v4.1.x-final versions while awaiting Audacious to release v4.2, 
+as I prefer to avoid getting ahead of them in version numbers, even as we are 
+ahead of 'em in features! ;)
+
+M$-Windows users should see some improved functioning of the helper scripts.
+
+NOTE:  As always, "final" does NOT mean the final (last) release we'll do, but 
+rather the latest final (ie. finished) production release, as opposed to a 
+beta or development ("devel") release (and a fresh MS-Windows binary build)!  
+
+Change log:
+
+* Update Transifex language-translations!
+
+* Added new Song Info options:  "Directory Channel-icon file[.ext]" and 
+"Use Directory Channel icon file (see above)" checkbox to allow 
+specifying an image file-name, which, if it appears in the directory of a 
+local song-entry file, will be used as the second ("channel") icon, similar 
+to the station / video or podcast channel icon imported when playing them, if 
+the Album-art plugin is active.  If not, and the song-entry does not have a 
+cover-art image associated with it, this will instead be used as a "fallback" 
+image for that entry.  The file-name specified may either be a simple name, 
+such as "channel", in which Fauxdacious will check for either "channel.png", 
+"channel.jp[e]g", or "channel.gif".  If specified with an extension, ie. 
+"channel.png", then only that image file will be checked for.  The same file-
+name must be used in all directories one wishes to have a channel icon, though 
+the extensions may vary (unless specified), and of course they can be different 
+images.  This differs from the other Album cover art file options, as it is 
+not loaded/used until after any web-searches by the Album-art plugins.
+
+* Added the Settings submenu option to the main menu for easier (2-click) 
+access, along with some additional menu icons.
+
+* Song-Info Edit window - Merge Audacious window-layout improvements allowing 
+user to resize window where the input text fields expand with the window while 
+keeping the image the same size.  Also allowing user to select the text of the 
+song entry path (on the middle left side of the window)  We also added these 
+features to the GTK version and increased the cover-art image size from 2 to 
+2.5 inches for easier viewing.
+
+* Fixed failure to play some URLs that contain playlists and have a valid 
+playlist extension (ie. .pls, .m3u, etc.) by NOT calling the URL-helper script 
+if this is so.  Also added an option to the [Settings.Playlist] tab to limit 
+the number of entries added by such URL-based (web-based) playlists, many of 
+which are just multiple entries for the same streaming station but with just 
+different port numbers (streamtheworld.com has a lot of these).
+
+* Album-art plugins - Add "Try to save by song file-name first?" option:  
+This works like the same option that already exists in the Lyrics plugins, 
+which (for local song files) causes web-fetched art image to be cached in the 
+same directory and file-name as the song file itself exists in, but with any 
+extension (ie. .mp3, etc., if any) to be replaced with the image type's 
+extension.  Normally, cover-art images are placed in the 
+.config/fauxdacious[-instancename]/albumart/ directory named after the album/
+artist name.  This is useful for tying the image directly to the particular 
+song file, which is where Fauxdacious looks first (if no embedded image tag).  
+NOTE:  This option has no effect on cover-art downloaded by URL entries (ie. 
+streaming stations, podcasts, videos, etc.)
+
+* Album-art plugins - Ignore the "Hide info bar art icon unless separate album 
+cover fetched" option when the Mini-Fauxdacious plugin is running and is not 
+docked (floating).  The purpose of this option was to prevent displaying the 
+same image in two places in the main window at once.  However, when running the 
+Mini-Fauxdacious plugin undocked (it's own separate window), that most users' 
+intent is to hide the main window thus hiding the duplicate image.  Therefore, 
+we've added code to ignore the hide duplicates option when Mini-Fauxdacious is 
+running undocked from the main window.  
+
+* Merge Audacious's new alternate "dark theme" and "flat" icons.  We also 
+added additional options in the [File].[Settings].[Appearance] tab to include 
+both a GUI checkbox for the old option to use Fauxdacious's "classic" icons for 
+the icons atop the [File].[Settings] window (previously had to be set in the 
+config file), plus an option to choose between "Native" and "Qt"'s version of 
+file-chooser windows.  This was needed due to the tradeoff of "Native" window 
+style being generally preferred (more native platform-looking and 
+full-featured), but ignoring user-set alternate themes and icons (such as the 
+ones we just added).  Audacious just uses the OS-Native ones always, resulting 
+in those windows NOT being rethemed, so we leave it to the user to choose.  
+There are 3 choices:  "Native" (the default, like Audacious), "Native unless 
+alt. theme or icons" (use Qt's less-featured version only if theme or icon 
+theme are set to non-"Native" options; and "Qt" (use Qt's version always).  
+
+* Add command-line option (-a) to load command-line entries to be loaded into 
+multiple playlists.  The long-name is "--add-list".  For example:
+
+$>fauxdacious [-other_options] entry1 entry2 -a entry3 entry4
+
+-OR-
+
+$>fauxdacious [-other_options] entry1 entry2 --add-list entry3 entry4
+
+-OR-
+
+$>fauxdacious [-other_options] entry1 entry2 --add-list="pl. name" entry3 entry4
+
+This command would (depending on other playlist options) add entry1 and entry2 
+to the current (or a new "Now Playing") playlist, then create a new separate 
+"New Playlist" playlist and load entry3 and entry4 into it.  A trailing "-a" 
+(with no entries following it) will add an extra blank playlist tab.  Each new 
+playlist created will have the default name "New Playlist".
+
+NOTE:  Unlike other options, this one is "standalone" (must always be preceeded 
+by it's own dash ("-")), and can be used multiple times in the same command.
+
+NOTE2:  If using the long form of the option, you can optionally include an 
+argument specifying a playlist name to use (the default is "New Playlist").  
+This optional name is a default, but if the next entry is a playlist file 
+containing a playlist title, then that will override any name specified here, 
+as is normal when importing playlist files.  
+
+* Media format-probing:  Add/Fix handling of non-Vorbis data "wrapped" in ogg 
+files/streams (ones with .ogg extension or "*/ogg" mimetypes).  This addresses 
+both Audacious issues #1160 (embedded Flac) and #1176 (embedded Opus, et. al.).
+
+* Fix bug related to user-editing of meta-tag data from streams downloaded as 
+temporary playlists (in "tmp_tag_data" file).  The edits are saved in the 
+"user_tag_data" global tag file, but the old values in tmp_tag_data still 
+override the new values, so now upon successful edit, any corresponding entry 
+in tmp_tag_data is now removed and the new values should now be displayed.
+
+* Stream metadata:  Add Genre to icy-metadata returned from many streams.
+
+* Playlist metadata:  Add two new options under [File].[Settings].[Playlist] 
+tab (Fauxdacious Extras):  [] Keep playlist metadata (like cuesheets do); and 
+[] Don't allow streams to change metadata.  Previously, when a metadata-
+supporting playlist was added to Fauxdacious, the metadata for each entry would 
+be overwritten by what was embedded in the file or stream, or with what was 
+found in user tag files.  The first option (if checked) prevents this and keeps 
+the entrie's metadata provided from the playlist.  This has always been the 
+behaviour of multi-entry (playlist-like) cuesheets.  Unlike cuesheets, any 
+metadata fields found in the entry or user tag files but omitted from the 
+playlist metadata will still be filled in.  Note, when streaming online radio 
+stations (which dynamically change the metadata when the streaming song 
+changes) will still override the original playlist-provided metadata (usually 
+desirable).  Check the second new option to also prevent this and maintain 
+display of the playlist-set metadata for all entries.  
+
+NOTE, that changing metadata fields via the Song Info. edit screen WILL still 
+override whatever was set regardless, and blanking a field will either restore 
+it to it's "fallback" value (if any, ie. filename for the Title field) or blank 
+it out.
+
+NOTE2:  The "Playlist.Refresh" and "Refresh Selected" options no longer really 
+do anything as this is all handled properly now when an entry is added, loaded 
+for play, scanned, or edited.  
+
+NOTE3:  We also fixed editing to also update immediately even if the 
+[File].[Settings].[Advanced] tab option "Do not load metadata for songs until 
+played" option is checked.
+
+* Fix apparently long-standing failure of the cover-art system to load cover-
+art files specified in user tag files when "OVERRIDE" or "ONLY" precedence was 
+set and cover-art was found embedded in the entry due to changes I believe 
+occured under the Nov. 13, 2020 commit entitled "Fix ancient minor bug handling 
+user tag files:" which I neglected to make a similar, needed change here.  This 
+should also result in the highest priority cover-art image found in tag files 
+being used if multiple matching tag-files are found using different precedences.
+
+* Album Art plugins:  Fix bug that caused wrong album art image to be displayed 
+for song files that did not have valid album art.  Problem only ocurred when 
+playing a stream with an embedded cover art image url and the user jumped 
+directly to play a song *file* that had no cover art image associated for it 
+and the image for the previously-playing stream would be used due to a failure 
+by the helper thread to properly and timely clear an internal variable.
+Fixed by re-clearing in main thread portion of the plugins.
+
+* Mini-Fauxdacious plugin (Qt):  Fix occasional failure to restore the infobar 
+when the plugin is deactivated.
+
+* Mini-Fauxdacious plugin (GTK):  Do not set initial undocked window as 
+"transient" so that the plugin window in the M$-Windows version will not be 
+minimized when the main window is (all other dockable plugins will continue to 
+default to transient).  The other side-effect of transient windows is that they 
+also remain on top of the main window (in most window-managers).  To make any 
+undocked plugin window NOT transient, simply select "Undock" from the menu 
+(even if it's already undocked), as the transient flag is only set when the 
+window is first created undocked.
+
+* DVD plugin:  Fix bug that still occasionally failed to terminate the reader 
+thread when the user pressed the [Stop (play)] button.
+
+* Neon transport plugin:  Check for user pressage of the [Stop (play)] button 
+whilst waiting to connect to a streaming server, stop trying, and clean up.  
+Problem was that if the server took many tries and or a long time to connect, 
+Fauxdacious would just display "Buffering...", user could get tired of waiting, 
+stop play at the "wrong" moment" and leave the reader thread still running in 
+the background while the user attempted to play another entry, which would 
+either crash Fauxdacious or also become hung in "infinite Buffering" until 
+Fauxdacious was shut down and restarted.  We used our new "hook" we created for 
+the recent DVD "audio-less menu" stop fix to handle this case as well.
+
+Version 4.1.3-final:
+
+This version should be up to date with Audacious's recent v4.1-beta1 release.  
+Otherwise, Audacious development has been very slow & quiet of late.  All users 
+are encouraged to upgrade to this release, and it is reccomended to update 
+to and build with their distro's latest FFmpeg version.  This release brings 
+a shiny new plugin ("mini-Fauxdacious"), improvements to several Fauxdacious 
+features, the most recent Audacious changes, and improved stability.  
+Video-playing sees better memory-managemt.  It's otherwise mostly a polish and 
+maintenance release.  
+
+NOTE:  As always, "final" does NOT mean the final (last) release we'll do, but 
+rather the latest final (ie. finished) production release, as opposed to a 
+beta or development ("devel") release (and a fresh MS-Windows binary build)!  
+
+Change log:
+
+* Numerous minor tweaks and fixes to the DVD plugin as we found a few issues 
+(bugs) while testing out the FFmpeg function changes mentioned below.  The 
+most serious of these was due to recent FFmpeg versions now returning ERROR 
+instead of the separate EOF value when reading packets hits the end of a menu 
+channel.  A second issue has been somewhat long-standing that there was no 
+graceful way to shut down Fauxdacious when it was "stuck" in a silent menu 
+awaiting user input (without first pressing a menu button to "play", then 
+pressing the "Stop" button).  I determined to fix this whilst at it.  The 
+other issues involved the Windows version and the fifo pipe not always being 
+shut down and becoming unusable (requiring editing the config file and 
+changing the pipe name).  It now properly closes on exit (unless a crash 
+occurs) and uses a random name to eliminate reuse.  These issues and testing 
+delayed this release by several days.  FFAudio seems to be working fine.  
+Only fix needed there was a small memory leak.
+
+* Refactor ffaudio and DVD plugins to replace FFmpeg-depreciated API functions.
+Whilst at it, plug a significant memory-leak that had crept into the ffaudio 
+plugin.  WARNING:  Most likely breaks backward-compatability w/significantly 
+older libav/FFMpeg versions due to the the significant refactoring needed to 
+cope with the modern FFmpeg API, but building w/"ffmpeg=libav" still seems 
+to build if modern enough though (primarily due to the fact that FFMpeg now 
+returns a pointer to initialize AVPackets instead of the data).
+
+* Fix Fauxdacious not stopping play properly (being left stuck "buffering" and 
+requiring a "kill" command from the command line) when an audio-less DVD menu 
+is displayed and waiting for user-input (user had to select a play option in 
+the menu to start play, then press the [Stop (play)] button to properly stop 
+DVD play).
+
+* Refactor stream metadata processing:  1) Handle cases of 
+'title=".." artist=".."...'.  2) Fix minor issues when option to split 
+title/artist fields NOT in effect (I always use the option, so hadn't gotten 
+enough testing love with it off)!  3) Better emulate Audacious's handling of 
+empty album field using stream domain-name; and we move it to the albumartist 
+field when splitting title/artist.  4) try harder to catch cover-art embedded 
+in metadata.  5) Be more consistant, especially if user toggles the split 
+title/artist option after a playlist has been loaded (update metadata fields 
+to the proper arrangement for the option on next metadata change).
+
+* Merge Audacious's update to the Qt popup error message window so that when 
+multiple errors occur, they are now displayed in a single popup window, now 
+requiring a single acknowledgment (the popup window is modal).
+
+* Merge Audacious's titlebar text dimming on focus-out on the Skins-Qt 
+interface windows.
+
+- One notable Audacious enhancement omitted is the addition of the "Moonstone" 
+interface plugin - WITHHELD for now from Fauxdacious due to it's lack of an 
+option or Settings menu access button to switch back out of it - requiring 
+the user to close down and manually edit their config file to get back to 
+the previous interface - YUCK!  I have not had time to try to add such an 
+option to it due to it's code-reusage.  Also, our new "Mini-Fauxdacious" 
+plugin provides a better alternative anyway (for both Qt and Gtk), imho!
+
+* Several other minor bug-fixes and cleanups.
+
+Version 4.1.3-beta2:
+
+* Add "Mini-Fauxdacious" plugin (info-bar-plugin-qt) to address Audacious 
+feature request# 1116.  This creates a standalone dockable version of the 
+"info bar" embedded in the lower part of the main window (non-skinned Qt 
+version).  When this plugin is invoked, if the embedded version of the info-
+bar is visible, it becomes hidden, extending the number of playlist entries 
+that are visible.  The user can then minimize the main window so that they 
+effectively have a "mini" version of Fauxdacious.  The playlist keyboard 
+shortcuts along with volume controls were added allowing basic play-
+minipulation from this mini-window while the main-window is hidden.  This 
+window can also be docked (either top of bottom) replacing the embedded 
+version, but unlike it, the docked plugin will fill the width of the main 
+window when docked.  I have not been able to remove the Qt-provided titlebar 
+though.  
+
+* Add GTK version of Mini-Fauxdacious plugin (info-bar-plugin-gtk).  NOTE:  
+Unlike the Qt version, it is not possible to display both the classic info-
+bar and this plugin at the same time (due to the GTK version not being fully 
+object-oriented code, thus not possible to have more than one instance active!
+(Both plugins auto-hide the classic info-bar when plugin is activated, and 
+restore it (if previously not hidden) on deactivation (as this should be the 
+preferred appearance, and you can dock the plugin anyway - top or bottom).
+
+* Added a tool-tip balloon to both on hover to show the valid key-actions 
+possible from within Mini-Fauxdacious.
+
+* Add Albumart (plugins) option to also scale images UP to fill the size of 
+the containing widget to address Audacious forum request dated 09/17/21.  
+This option will apply to all GTK art icons/images and Qt ones in the 
+Albumart-Qt plugin (GTK uses central code to scale images, but Qt does it in 
+the Albumart plugin itself, and perhaps info-area, et. al.), but those are 
+all small enough that it's pbly not worth bothering there!  *dacious already 
+scale (too large) images DOWN to fit automaticly, but not UP.
+
+Version 4.1.3-beta1:
+
+* Add Playlist Settings Checkbox "Advance to next selected entry in list":
+Fauxdacious has long had the extra feature for selecting a song other than 
+the currently-playing one, and Fauxdacious would play that song next, but only 
+the first one (if more than one) selected, and would not wrap back around 
+unless the [Repeat] option was on.  1)  Fixed that to ignore the [Repeat] 
+option and wrap if needed.  2a)  Fix Fauxdacious to NOT clear the selection 
+list (but only deselect the previously-playing song) on song-advance/jump, and 
+2b)  Continue to advance throuogh multiple-selected songs in the playlist from 
+starting with the first one below the currently-playing entry from top to 
+bottom order, wrapping as necessarily and deselecting each one after play.  
+This allows for one-off overriding the current play order, and is particularly 
+useful while using the [shuffle] option, as it overrides that too until only 
+the currently-playing song is selected (highlighted), then reverts to normal 
+play ([shuffle], [repeat] options, or next song).  The new checkbox previously 
+mentioned must be checked for #2a and #2b to apply, otherwise, the default is 
+to work as previous Fauxdacious versions (and Audacious) work (selected songs 
+are deselected (row highlight removed)), except #1 still applies.
+
+NOTE:  This only affects advancing to the [Next >>|] song, as this traversal is 
+always one-way, deselecting each after play, so the [Previous |<<] button still 
+behaves as always, moving either the previous song (or previous shuffle(d) 
+song) played, but selections remain highlighted and resume from there until 
+all but the currently-playing song entry are deselected (dehighlighted).
+
+* Add support for a second "art icon" for the album/video/podcast channel/ 
+audio CD-disk to be displayed in the song-info section when the Album Art 
+plugin is active and displaying a different (video/podcast/CD track-specific) 
+image.  This is supported in the "Comment" metadata field - to add the second 
+(album artist icon) image file, append a semicolon followed by the file URI, 
+ie. "Comment=file:///path/CoverArtImageFile;file:///path/albumArtistIconFile". 
+This works similar to the separate song album-cover art and the streaming 
+station icon feature we added awhile back.  The Song-Info edit screen 
+"Art Lookup" feature will only replace the first file, if any (before the 
+semicolon) leaving that second album-artist image link intact.
+
+* Add support for embedded lyric tags to APE tags (wavpack plugin), Vorbis 
+comments (flac, vorbis plugins) and for formats handled by FFMpeg via the 
+ffaudio plugin, such as opus, ogv, etc.  Fetching these embedded lyrics tags 
+should now be supported for all file formats the underlying plugins' upstream 
+libraries do, but saving lyrics to embedded tags is limited to files with the 
+following extensions for now:  .mp3, .ogg, .ogm, .oga, .flac, .fla, and .wv.
+
+* Add a user-agent config option and an option to completely ignore SSL 
+certificate checking/verification to the neon transport plugin to deal with 
+fussy streams.
+
+* Fix and improve track metadata handling for Audio-CDs, particularly 
+when using custom disk-specific tag files.
+
+* Merge in (most of) recent Audacious commits and fixes (see GIT commits).
+
+* Fix several misc. minor bugs (see GIT commits for details).
+
+Version 4.1.2-final
+
+This release is a smaller release than previous ones (much fewer changes) as 
+Fauxdacious has somewhat matured and Audacious development has greatly 
+slowed.  Most of the changes center around improving efficiency and smoother 
+user experience, particularly by threading calls to the helper scripts out 
+from the main GUI thread.  Most of the changes this release involved the 
+Lyricwiki and Albumart plugins and their associated helper scripts.  Besides 
+user-experience, much of the efficiency improvements involved significant 
+effort to minimize the number of "hits" placed against websites providing 
+album-art images and / or lyrics when playing streaming radio stations that 
+change songs every few minutes.  Besides speed, this effort is directed at 
+lowering the risk of a user who frequently listens to such stations using 
+these plugins from getting noticed and possibly blocked by any of these 
+websites for "overusage".  Anyway, all users are encouraged to upgrade to 
+v4.1.2-final as soon as practical!  
+
+NOTE:  There appears to be a bug in recent versions of libtasn (upstream 
+library) that can in rare cases crash Fauxdacious when user jumps from a 
+playing fixed-length https stream to another stream while freeing 
+certificate data when the previous connection is closed (freed).  We added 
+an attempt to the Neon plugin to use a Try/Catch fuse on the offending 
+function call that frees the session.  This might lead to a possible memory-
+leak but not much else.  Due to the rarity of this bug, I haven't been able 
+to thoroughly test the work-around.
+
+Detailed changelog below:
+
+* I believe that the recent threading improvements seemed to have eliminated 
+the long-standing bug involving the skins-GTK interface sometimes becoming 
+unresponsive to user-interaction (mostly the Windows version), as I haven't 
+seen this manifest in quite some time now.
+
+* Remove confirmation popup when deleting an empty playlist.  Just seemed 
+somewhat annoying and silly to me when the playlist is empty, and There's 
+already a user-option to turn this off anyway, but perhaps now fewer users 
+will be inclined to turn it off.  
+
+* Refactor CoverArtHelper script to take advantage of the latest v1.20 of 
+LyricFinder's ability to fetch a cover art image from some lyrics sites, and 
+also reduce hits on the lyrics sites by fetching lyrics along with the cover 
+art image, and integrating with the LyricWiki plugin to avoid having to re-
+call the lyric site furnishing the cover art image for lyrics (when both 
+plugins are active.  Also fix failure of Musicbrainz to return cover art 
+images due to slight changes in their site.  The CoverArtHelper will now first 
+try the LyricFinder module for cover art (and lyrics), then, failing that, 
+will try to fetch from Musicbrainz (previously it always hit Genius.com 
+(one of the "lyrics" sites) first), then Musicbrainz.
+
+NOTE:  As a result, users must upgrade LyricFinder to v. 1.20 or better to 
+take advantage of this integration!
+
+* Greatly improve the GUI performance and overall efficiency when using the 
+AlbumArt and/or Lyric plugins by separating out to separate threads, the 
+calling of their respective Perl helper scripts for fetching cover-art and 
+lyrics respectively from the web (The GUI should no longer briefly "freeze" 
+while the helper script(s) are searching for and fetching data from the web!
+
+* Refactor the FFMpeg plugin for better video playing via a separate reader-
+thread to fill the buffer queues and redo the way the queueing takes place.  
+This slightly improves video play in general and greatly improves HLS videos 
+(m3u8 and mpd).  Also add option to specify that these "dash"-style videos 
+(or any other based on user-choice) be handled by FFMpeg itself rather than 
+by the Neon transport plugin.
+
+* Add ability to use cover-art links embedded in ICY metadata tags or 
+specified in the "StreamURL" metadata field for streaming radio stations, 
+saving the need to search the web for the Title and Album fields (when using 
+the Cover Art plugins.
+
+* Add ability to play flac streams w/embedded ogg-vorbis (addresses Audacious 
+support/feature request# 1075).
+
+* Add threading to the lyricwiki plugins to move the lyric-fetching from the 
+web (the helper script), which is slow so that the gui is not temporarily 
+frozen whilst fetching lyrics from the web.
+
+* Add "Hide Info Bar Fallback Art" (View option) to only show an icon in the 
+info bar shown for the currently-playing entry only if there actually is one 
+(like the info popup currently works).
+
+* Apply the (Fauxdacious-only) "Split Artist - Title in streams" option to 
+Vorbis comments (ogg-based streams), which may use vorbis-comments instead of 
+icy to embed metadata.
+
+Version 4.1.1-final
+
+This version adds several minor features and numerous minor tweaks and fixes, 
+particularly for users using multiple playlist tabs, the LyricWiki plugin, and 
+the Qt plugins.  Audacious came out of hybernation just after v4.1-final was 
+released and did a ton of retooling under the hood, and we have merged (most) 
+of them here (Audacious v4.1-beta1 commits from Dec. 7 through Jan. 7 2021).  
+We are now "ahead" version-number wise of Audacious due to our release 
+schedule and numerous Fauxdacious commits of late and their unexpected delay 
+in releasing a final 4.1 before we needed a final release).
+
+Short log:
+
+* Fix playlist-tabs to work properly (make deleted tabs disappear, allow 
+keyboard focus/minipulation, remove sort-indicators on column headers when 
+multiple tabs are shown (to avoid confusion due to the fact that different 
+tabs can be sorted by different columns, but can not display different sort 
+indicators per column due to Audacious design (Audacious does not support 
+column sort indicators!)).  Added [Import] and [Add Files] menu options to 
+playlist tabs for convenience.
+
+* Numerous Audacious retooling and rewiring under the hood changes merged.
+
+* Fix several window-manager issues.
+
+* Merge Audacious's new "dock-window" interface for Qt plugin windows.
+
+* LyricWiki plugin improvements, namely better caching and restoring lyrics, 
+and displaying "description" text for podcasts and videos in Lyricwiki in 
+lieu of song lyrics (since they don't have "lyrics", but a "description".
+
+* Helper plugins can now be user-configured more easily via new corresponding 
+".ini" files (templates included for users to edit to their requirements).
+
+* Doc / FAQ improvements, particularly how to properly install and test the 
+three Perl "helper" scripts, and get them working after I had to walk a user 
+through that process after he attempted to install them by following the docs.
+
+To-do (next release):
+
+* Make the "About" window not "always-on-top".
+
+* Remove "LWP::Simple" from FauxdaciousUrlHelper.pl's prerequesite Perl 
+modules (no longer needed).
+
+Version 4.1.1-beta2
+
+Lyrics - Added "Album" field to argument list passed to the Lyric Helper 
+script, and modified the script to enable skipping specific "albums" from 
+trying to fetch lyrics.  This makes it possible to prevent streaming 
+stations (very few change the Album field) that play say, instramental 
+music, etc. that don't have lyrics, from uselessly hitting the lyrics 
+sites for lyrics without having to close the LyricWiki plugin down.
+
+Switched the lyric helper and plugins to now use my new LyricFinder CPAN 
+module instead of the much-older Lyrics::Fetcher::* modules maintained by 
+David Precious.  This makes installation much easier as all the supported 
+side modules are now bundled together!  We also added some new features, and 
+we now have full contol over updates / maintenance!
+
+Version 4.1.1-beta1
+
+I now believe that v4.1-final was slightly rushed (should've released a 
+4.1-beta4 in hindsight), as (is typical) when the dust settled, I thought 
+of a cpl. (minor, I thought) features to add for the next release that ended 
+up resulting in a bunch of testing and revealed (or created) issues (bugs) 
+that needed fixing!  Therefore, with Audacious development seeming to be 
+in hibernation at the moment, I want to get all this out into an eventual 
+v4.1.1-final eventually (before Audacious wakes back up), then maybe pause 
+myself for a while.  We're also waiting on the Lyrics::Fetcher developer to 
+merge our changes into his code.  Anyway, go apply those commits and test! ;)
+
+FIXED:
+
+* Minor issue with Albumart's "Hide info bar art icon unless separate 
+album cover fetched" option that caused non-"dup" (internet-fetched) 
+album-art to still show in info bar when [View].[Show Info Bar Album Art] 
+was unchecked (hide always).
+
+* Url Helper script:  Handle non-ascii characters that come from a few 
+websites via StreamFinder in the description text, and possibly the title, 
+that don't play nice with Glib's g_key_file_get_string () function, which is 
+used to fetch this data from the tag files.
+
+* CDs/DVDs: (LyricWiki) - Make LyricWiki plugin's [Save Locally] button 
+work correctly for disks when the [Try to save by song file-name first] 
+option is set.
+
+* CDs/DVDs: Fix some issues involving updating & saving tag metadata via 
+the [Song Info] screen, and harden the code to prevent potential crashes 
+if the disk has no disk-ID / title.  For CDs, track metadata can be fetched 
+from the disk (cdda) or from the web (cddb, or the (cover art) helper script 
+the first time a disk is played.  We save any such fetched track data in 
+a custom tag file (~/.config/Fauxdacious[-instancename]/<DISK-ID>.tag), if 
+the plugin option "Allow Custom Tag-files" is checked, so that on subsequent 
+play, the data is already saved locally.  Users can modify this data for 
+individual tracks using the [Song Info] box, as is true for other music 
+files.  For DVDs, only cover art is fetched, but the displayed title and 
+cover art image can be changed, artist, year, etc. can be added the same way.
+
+* neon: Add workaround for frequent 416-server errors that seem to plague 
+some podcast sites that cause podcasts to seemingly randomly fail to start.  
+(The server reports that it can accept byte range offsets for seeking, then 
+will sometimes return a 416 error when we attempt to seek to get metadata.  
+Retrying startup (this workaround) without seeking seems to work!
+
+* cover art: The new [Song Info]."Search for images matching Album tag..." 
+option was being overridden by the first image found matching the keyword 
+search feature, if both were found.  Fixed to ensure precedence (when all 
+search options are enabled) is:  1) art image file matching the song entry's 
+file name (ie. song.png for song.mp3); 2) Album name image (ie. Album Name.jpg 
+if the Album tag is "Album Name", and then 3) "*<keyword>*" (ie. "*cover*.png", 
+"*album*.jpg", etc. searched recursively down thru the subdirectories.
+
+* Lyrics: Null-terminate lyrics to avoid trailing "garbage characters" showing 
+up at the bottom of the lyrics display screen.
+
+* ogg/vorbis: Only allow "streams", not song files of this type to update 
+(change) the tag metadata (from what was probed) when playback starts.  This 
+now is consistant with mp3 files and streams.  Problem manifested when the 
+user created a "user tag data" file entry for a song file with Precedence set 
+to "ONLY" or "OVERRIDE" meaning use THESE values, then starting play would 
+override these values with the metadata in the tags.  We WANT this for streams, 
+ie. streaming radio stations that CHANGE titles, etc. regularly, but NOT for 
+files, where the song metadata is fetched once on scan.
+
+* user tag files: The "Precedence" field in these tag files was not working 
+properly in certain cases, namely when a higher priority (more local) tag file, 
+ie. "./user_tag_data.tag" had an "OVERRIDE" precedence, but a lower-priority 
+tag file, ie. "fauxdacious/user_tag_data" had an "ONLY" precedence.  Now, the 
+tag files are processed in proper order with only the FIRST matching entry 
+used, and the song's metadata tags are read (and processed against "DEFAULT" 
+or "OVERRIDE") unless the matching entry's precedence is "ONLY".  A new 
+precedence option was added:  "NONE" means ignore the entry (as if commented 
+out) and continue searching.  The priority is:  
+1) "<fauxdacious-instance>/tmp_tag_data", 2) "./<song-file>.<mp3>.tag", 
+3) "./user_tag_data.tag", 4) "<fauxdacious-instance>/user_tag_data", 
+and 5) Tags embeded in the entry.  (Tags with precedence="DEFAULT" 
+are overwritten by non-empty tag fields from the entry).
+
+ADDED:
+
+* Ability to hide album-art icon in info bar ([View].[Show Info Bar Album Art]) 
+option and Albumart plugin's [Hide info bar art icon unless separate album 
+cover fetched] options to the Gtk side (long ago added to Qt side) when 
+Audacious added this to their Gtk side recently.
+
+* Merged in recent Audacious changes, mostly cosmetic.  However, one big 
+change was a redesign of their Qt plugin "dock windows", but also, the 
+equalizer and the "queue manager".  This created some window-management 
+issues due to the fact that Qt restores whatever active plugins you were 
+running when you last exited, but also which plugin windows were "docked" or 
+"undocked", and if "undocked", their window-locations on the screen.  This 
+is great, but the way Qt handles this causes issues with many window-managers. 
+Qt creates all the plugin windows slightly before mapping the main window, 
+which thwarts window-managers' attempts to group all the windows with the main 
+(master) window, since they often expect the master window to be mapped first.
+The results were that the undocked dock windows started out in "limbo" being 
+placed always on top of other application's windows, and not raising and 
+lowering when the main window (the playlist window) was clicked on.  The only 
+way to fix this was for the user to manually dock and then undock each of 
+these windows.
+
+We added a workaround config option: [audqt]."restore_floating_dockapps_late", 
+and made it default: TRUE.  This option forces Fauxdacious-Qt to save a list 
+of all plugins with undocked dock windows, and deactivate them on exit.  When 
+restarted, the main window is first created with any (previously) docked 
+plugins restarted first, then manually checks the list and restarts all the 
+docked ones afterwards (this appears almost instantaniously to the user).  The 
+only remaining issue is that I have been unable to get the main window to 
+start out focused, but the last restored undocked plugin window has the 
+keyboard focus (until user clickes on the main window).
+
+We've now added a second workaround for this using window-managers' 
+"FocusOnMap" options (for ones, such as AfterStep which allow app-specific 
+window-management options) by changing the Qt application's "name" from 
+"Fauxdacios" to "Fauxdacious_Qt" to differenciate it from the GTK interface, 
+so that using the following AfterStep "database" config options, one can have 
+this configured for the Qt plugin windows work properly, but still have the 
+GTK version of the windows still work well too:
+
+AfterStep database config options for best results with Fauxdacious (configure 
+similar options on other WMs for this workaround).  This works because 
+AfterStep looks at WM_NAME (window title), then WM_CLASS (application name) to 
+match "Style"s, and applies matching one from first to last:
+
+Style  "*"                 FocusOnMap
+Style  "Fauxdacious_Qt"    NoFocusOnMap, Sticky, HonorPPosition, HonorGroupHints, HonorTransientHints, HonorExtWMHints
+Style  "Fauxdacious_NF"    NoFocusOnMap, Sticky, HonorPPosition, HonorGroupHints, HonorTransientHints, HonorExtWMHints
+Style  "* Fauxdacious"     FocusOnMap,   Sticky, HonorPPosition, HonorGroupHints, HonorTransientHints, HonorExtWMHints
+Style  "*dacious Video"    Layer 0, NoFocusOnMap, Sticky, HonorPPosition
+Style  "*dacious DVD"      FocusOnMap, Sticky, HonorPPosition
+Style  "Mini-Fauxdacious*" NoTitle, NoFrame, NoHandles, Sticky, HonorPPosition, HonorGroupHints, HonorTransientHints, HonorExtWMHints
+Style  "Fauxdacious"       FocusOnMap, Sticky, HonorPPosition, HonorGroupHints, HonorTransientHints, HonorExtWMHints
+
+While at it, fixed GTK side to NOT put Equalizer window "AlwaysOnTop".
+
+* Video Display (visualization plugin):  This plugin now works like all the 
+other "visualization plugins", allowing the user to dynamically toggle the 
+video window (for both the FFmpeg and the DVD plugins)!  Video is toggleable 
+if the plugin's own existing [Play video in popup window] option is checked.  
+Previously, the user had to stop and restart any currently-playing video 
+stream in order for toggling this plugin to take effect.
+
+NOTE:  When upgrading to this version from v4.1-final, you'll probably need 
+to go into the FFmpeg and DVD plugins' configuration options screens and 
+re-check the box for [Play video stream in popup window]!
+
+* Made the [skins].afterstep configuration flag global and added an option 
+box to the [Settings].[Advanced] screen labeled [Quirky window-managers 
+(ie. AfterStep)?].  Users who had the old option set in their config file(s) 
+will need to go and check this box!
+
+* URL Helper:  Place the "Description" text from StreamFinder::* fetched URLs 
+into the "Lyrics" tag (in the tag file).  This is very useful for videos and 
+podcasts, as these almost never have matching "lyrics"!  However, for streaming 
+radio stations that play songs, these "lyrics" will (properly) be overritten 
+by those related to the currently-playing song title whenever the "title" 
+field changes during play (as was before).  Some podcasts DO have embedded 
+"lyrics"/description, and those also will overwrite this Description "lyrics" 
+put into the tag file by the helper script.
+
+Version 4.1-final
+
+* LyricWiki plugins:  Add options to turn off internet lyric fetching, and 
+to try first to save lyrics to song file name first (ie. "./songfile.lrc") as 
+opposed to the global lyrics cache 
+("~/.config/fauxdacious[-instancename]/lyrics/ARTIST NAME/TITLE.lrc").  This 
+only affects songs playing from disk, as opposed to URLs, etc.
+
+* LyricWiki plugins:  Save lyrics to the global lyrics cache directory as: 
+"lyrics/ARTIST NAME/Title.lrc" instead of just title (lyrics/TITLE.lrc), like 
+Audacious does.  This needed b/c there are songs with the same title by 
+different artists that are completely different songs & different lyrics!
+
+* Helpers:  Add a corresponding "helper-script-name.ini" file for each of the 
+current 3 helper programs, ie. "FauxdaciousUrlHelper.ini".  Comments in the 
+top of each of the templates (in /contrib/) describe what the user can 
+configure.  This was previously hard-coded in the scripts, and Windows users, 
+with no Perl on their systems and using the compiled binary versions had no 
+way to edit.  NOTE:  Windows users will find this in the same directory the 
+installer installed the program in 
+(default is:  C:\Program Files (x86)\Fauxdacious\bin\) and will need to copy 
+the ones they wish to edit to their (usually): 
+C:\Users\<username>\AppData\Local\Fauxdacious[-instancename]\ directory.  
+All others will need to copy them from the /contrib/ directory to the same 
+place in order to edit and use.
+
+* Skins:  Add "Add Files" and "Add URL" options to the main menu, making it 
+easier to add stuff to the playlist without the playlist being displayed.
+
+Version 4.1-beta3
+
+* Add [Song Info] option to search for cover-art file name matching the 
+Album tag (if specified).  This is only done if this new option is set AND 
+there's an album tag AND no other cover art file was found.  The matching 
+<Album-name>.{jpg|jpeg|png} file must be in the same directory as the song 
+file (no recursive search is done).  Address Audacious bug# 1013.
+
+* Add a "Hide info bar art icon unless separate album cover fetched" option 
+to the Qt version of the Album Art plugin (I don't know how to program this 
+in the GTK version yet).  This enhances the new Audacious [View]."Show info 
+bar Album Art" option, which allows hiding the album-art icon in the playlist 
+"info bar" (not the hover-over playlist info popup).  This new Fauxdacious 
+option will still hide the info bar icon only when no custom album-art image 
+is fetched from Musicbrainz (the web) for the currently-playing song.  The 
+reason for this is that unless a custom album-art image is fetched from 
+the web, the image shown in the Album Art plugin will be a *duplicate* of 
+the icon shown in the info bar, which some may find redundant / annoying.
+This is typically noticable when streaming radio stations with the Album Art 
+plugin enabled and fetching images for each song, but not finding images for 
+some, in which case the station icon will show in both places, but the user 
+WANTS the station icon shown in the info bar only if there's a different 
+(real album cover) found for the song.
+
+* Add a true "visualization plugin" to toggle whether or not a video window 
+will pop up when a video stream or DVD is played (Previously, the user went 
+to the config options for those other two plugins to check the box if they 
+wanted the video popup window to display).
+
+* Add a Pure-Perl lyrics "helper" script (FauxdaciousLyricsHelper.pl) and 
+update the LyricsWiki plugins to use the Perl helper script to fetch lyrics 
+from sites supported by David Precious's Lyrics::Fetcher::* modules (on CPAN). 
+Sites currently known to work:  genius.com, azlyrics.com, and musixmatch.com.  
+This was all necessitated by the fact the lyricwiki (fandom.com) is now 
+defunct, and Audacious rejected the last bug reporting that fact, implying to 
+me that they may decide to depreciate the lyricwiki plugins.  NOTE:  if no 
+helper script is specified, the lyricwiki plugins will still "work" the old 
+way, so if Audacious does fix this, then it should work again without the 
+helper script.  This should provide a longer-term fix, since as sites change 
+and come and go, users should only need to update the Lyrics::Fetcher::* 
+modules rather than having to update / recompile Fauxdacious.  Also, multiple 
+lyrics sites can be searched as needed.  NOTE:  This is still "beta quality", 
+as I'm working with David Precious's Lyrics::Fetcher::* modules to work better 
+with Fauxdacious and better handle special case artist names and titles.
+
+* Fix fetching cover-art images in files tagged as id3v2.2 
+(Audacious bug# 1030).
+
+* Add genius.com to the Cover Art helper script, as it provides much quicker 
+and simpler searches, and contains a vast library of song-specific cover-art 
+images.
+
+Version 4.1-beta2
+
+* Enable fetching and storing cover-art images in APE-tagged files 
+(Wavpack/.wv files) and Vorbis-comment tagged files (.ogg), as was previously 
+added for ID3v24 (.mp3) files.
+
+* Fix potential bug (mostly affects M$-Windows users) where cue-sheet files 
+named with upper case extention (".CUE") probably weren't being correctly 
+recognized and handled as cue-sheets.
+
+* Fix bug where adding an album cover image to a cue-sheet entry would 
+clobber the cue-sheet file itself when being added via the Song-Info screen.  
+Problem was the metadata was being saved to (over) the cue-sheet file itself 
+instead of the selected entry.  Saving other metada to cue-sheet entries was 
+already prohibited (except the art image).  Fixed by both correcting this 
+bug AND now permitting user to edit the other metadata by making the song-info 
+screen data user-editable for cue-sheet entries as well.  NOTE:  Metadata 
+fields updated by the song-info screen are still OVERRIDDEN by any 
+corresponding values specified in the cue-sheet file (even though the updated 
+data is still saved and preserved in the referenced entry file)!
+
+* Added audio channels data to the Song Info. plugin screen (Audacious-added 
+feature), but for audio-CDs, we fetch the actual no. of channels instead of 
+hardcoding to 2!
+
+* Added option to hide the menu-row at the top of the Qt playlist window 
+(Audacious-added feature).
+
+* Added option to hide the cover-art icon and / or the visualization shown 
+on the info-bar below the playlist on the Qt playlist window.
+
+* Numerous other minor Audacious commits merged along with minor cleanups and 
+optimizations of our own.
+
+Version 4.1-beta1
+
+Version 4.0-final has shown to be a very good release, stability-wise and 
+is now pretty much doing everything I want it to do, however due to very 
+little uptake (by others), I'm starting to lose interest in development.  
+That said, I continue to monitor Audacious and what they're doing.  Since 
+they've officially switched to Qt (and I only use GTK), very little of what 
+they're doing interests me, however, they are still finding small bugs and 
+optimizations, which I am continuing to merge here.  One issue is that they've 
+been doing a titanic amount of work under the hood that would require 
+immense labor on my part to merge into our now widely-different codesets that 
+don't seem to actually improve functionality.  Some support some new Qt plugins 
+/ features such as their searchtool plugin, and a new album-advance feature 
+that I won't use or need.  Oh, never mind - Audacious has recently been 
+rejecting some user-requests that I think are cool ideas, so it's gotten me 
+busy again! :D
+
+* One new fauxdacious-specific feature I have added to the StreamTuner plugin 
+is grabbing image thumbnails for stations selected via StreamTuner and 
+implementing using our "user_tag_data" custom tag-file.  This is for the 
+IHeartRadio model only for now, as only that site has these image 
+links in their metadata.  I would love to have the StreamTuner plugin 
+available to me as a user, but Audacious does not plan to create a GTK 
+version at this point and I do not have the skillset necessary to create one 
+on my own.  I have also filed feature request# 969 to make streamtuner sorted 
+and sortable, as this is also above my skill level.
+
+* Fixed Qt time slider/display issues, closing Audacious bug# 957.
+
+* Fixed segfault when using sox resampler at higher bitrate than song when 
+adjusting the time slider (closes Audacious bug# 950).
+
+* Merging various Audacious tweaks (mostly minor bugfixes and Qt changes).
+
+* Added cover-art file-selector button to the "Song Info" window on the 
+Qt side.  Also disabled the button on both sides when the [Settings].
+[Song Info]."Save unsaveable metadata to (tag) file" option isn't checked, 
+as fetching album art from the Tuple::Comment field ONLY works when it's 
+in a tag file, NOT embedded in the song file's metadata!
+
+* Merged a massive Audacious change to the "recording/dubbing" API from back 
+in 2017, since some of our changes were causing seg-faults and needed these 
+changes to work correctly.
+
+* Added option to the Lyricwiki plugin to save fetched lyrics directly into 
+the id3v24 tags in mp3 files (Audacious-rejected feature #977 and 
+Audacious-ignored request #752).  
+
+* Whilst I was at it, I also figured out how to save cover-art images 
+directly into them as well, greatly reducing the need for large 
+"user_tag_data" tag files and the need to keep all the album-art images 
+stored forever on the albumart directory!  The requestor of #752 said he 
+knew of only one Linux player that supported this, well, now there are TWO!
+
+* Fixed issue of tag-saving during recording, which could cause an annoying 
+"hiccup" in mp3 files.  The issue is that you really can't properly save 
+id3 tags into a file whilst it's being recorded, so now we don't - instead, 
+we just save to the "user_tag_data" tag files (if "save unsavable metadata" 
+option is enabled), otherwise, we no longer attempt to save tag data while 
+file is being recorded into.
+
+* We now save the status and position of the Equalizer window in the non-
+skinned interfaces (as is already the case in the skinned ones, addressing 
+Audacious request #909.
+
+* Added the plugins' actuall (short) "names" to the [Settings].[Plugins] 
+window (enclosed in []) to make it easer to enable and disable plugins via 
+the Fauxdtool (since it needs THAT name), as there is no other good way to 
+get that name.  Someone requested this in Audacious a while back but I can't 
+find it (and they haven't done it).
+
+Version 4.0-final
+
+Notable enhancements include:
+
+* Custom song/stream-specific equalizer & effects-plugin settings added to 
+the Qt version. including stream URLs.
+
+* New option for the Album Art plugin for fetching album-art from MusicBrainz 
+for the current song playing, including changing the album-art as the song 
+title changes when playing from streams!
+
+* Lyricwiki fixes and improvements, including the ability to save to and use 
+local lyric files for songs.
+
+* Enable tag-data saving while song is being recorded from a stream, including 
+album-art.
+
+* Add option for enabling separate custom tag-files for individual songs and 
+directories (for local song files).
+
+* New option to split the artist and title from icecast, et. al. streams 
+which do not format them correctly.
+
+* Improve Win32 building and build a new binary Win32 version of v4.0-final!
+
+* Eliminate spam warning messages when exiting the Qt version!
+
+* m3u8 tag improvements.
+
+* Merge on more of Audacious's Qt interface fixes / improvements.
+
+* numerous code optimizations and UI touchups!
+
+
+Version 3.10-final
+
+* Expose PauseMute option (-P option in Fauxdacious) to fauxdtool 
+("--playback-pausemute 0|1" to set and "--playback-doespausemute" to 
+fetch status - returned in $?).
+
+* Fauxdacous is now completely divorced from Audacious!  This means that the 
+two no longer share ANY library, include, binary, or configuration names, 
+and one can now install both Fauxdacious and Audacious on the same 
+system and even the same base directory location, ie. /usr/local/.  The 
+common library names, such as libaudcore, libaudgui, etc have all been 
+renamed libfauxdcore, libfauxdgui, etc.  User configurations are now 
+kept separate under ~/.config/fauxdacous*/ instead of ~/.config/audacous*/.
+Existing Fauxdacious / Audacious users will need to copy (cp -R) their 
+existing configuration files over accordingly!  Users may also need to 
+edit their "user_tag_data" files that reference images in the prev. config 
+directory!  Manpages reflect the new (proper) names as well (fauxdacious 
+and fauxdtool).
+NOTE:  Within "config" files themselves, the secion "[audacious]" remains 
+unchanged, so you shouldn't have to edit the file(s) themselves!
+
+* Add "close when recording stopped" and "use custom (directory) for 
+non-local directories" checkboxes to Filewriter.
+The first causes stdout to be closed whenever recording stops (uncheck 
+for multiple recordings to stdout).  The second prevents error if 
+recording a streaming URL to "Orig. Directory" by saving the output to 
+the "custom" directory ($HOME if custom directory field empty).
+
+* Added option under [Settings].[Song Info] to set a "default" cover-art 
+file for use by entries for which Fauxdacious can not find a cover-art 
+image for.  Default: empty (no image).
+
+* Replaced some very old and primitive C-code.
+
+* Add checkbox for "PauseMute" (-P command-line option) to the 
+[Settings].[Playlist] options screen (both GTK & QT) to allow toggling 
+this option while running.  Changes are lost on restart as the -P option 
+(or lack thereof) still sets the (default) state on startup (this is 
+intentional).
+
+* Make piping to stdout actually useful:  Add a -o / --out=<ext> command-
+line option to force Fauxdacious to launch with the Filewriter plugin 
+selected for output and temporarily configured to write to stdout.  This 
+is then reset back to the original user-configured output plugin and 
+recording options on exit.  If "headless" (-H option) is also specified, 
+then "-q" (--quit-after-play) is also implied and Fauxdacious exits when 
+playback stops.  This makes it easy to do conversion piping, 
+like:  "fauxdacious -DcH --out=mp3 [stuff-to-play] >new_file.mp3" WITHOUT 
+having to first start up, set the recording options to stdout, etc., exit, 
+then run to pipe to stdout!  This option long ago existed in my earliest 
+Audacious hacks but had since been removed when I remerged my changes to 
+Audacious v3.6.  The supported extensions are:  wav, mp3, ogg, and flac.
+
+* Had to (re)add a separate "--" stdin argument for loading a list 
+of files EARLY (before fauxdacious can transfer itself to an existing 
+running session) to restore the (apparently long-lost) ability to append 
+additional files via stdin to a running session (also still works for 
+new sessions too though).  Example:  "ls somefiles | fauxdacious -Dc --",
+then, later: "ls somemorefiles | fauxdacious -e --".
+
+* Added feature to stdin-piping to now allow the direct piping in of 
+a text list of playlist entries WITHOUT the previously-required extension 
+("-.m3u", "-.txt", etc.), but rather now just "-", same as when piping in 
+media streams (but the old Fauxdacious way (with extensions) still works!)  
+Fauxdacious supports two ways of stdin-piping due to the fact that this 
+feature predates Audacious's current way of doing it.  The (non-probing) 
+"old way" involves specifying the media type via extension, ie. 
+"cat song.mp3 | fauxdacious -.mp3".  This (and the even older "stdin://-.mp3")
+still work, even for piping in playlists or queuesheets.  The "new way" 
+Audacious does it is without the extension ie. "cat song.mp3 | audacious -").
+Fauxdacious now supports both methods for media, but still requires the 
+matching extension hint for cuesheets and playlists (other than text/m3u), 
+since the underlying Audacious code does no probing for playlists, and 
+Audacious does NOT support piping in playlists or cue-sheet files anyway.
+(In other words, if it works in Audacious, it should work in Fauxdacious!)
+If the media type is known, the "old way" is still preferred as it tells 
+Fauxdacious exactly what's coming in, and thus probing can be avoided!
+NOTE:  .mov files (and perhaps some others that require seeking to the end 
+of the file before playing), disks (CDs and DVDs), and streams that require 
+transformation by the URL helper script such as Youtube, etc. can NOT 
+be piped in via stdin!
+
+* Cleaned up some issues with stdin-piping of adplug and ffmpeg media.
+We now also open stdin as a VFS file when "Matched by extension" (the 
+"old way") so as to work more like it now does when matching by content 
+ie. when no extension is specified with the "-" (the "new way").
+
+* Eliminated the now-depreciated "youtubedl" plugin.  This plugin was my 
+rough first attempt at playing Youtube videos in Fauxdacious, but is now 
+obsolete, as Youtube (and other) videos are now much better supported 
+via the FauxdaciousURLHelper.pl "helper" script which uses the Perl library: 
+StreamFinder::Youtube, and youtube-dl (the separate program).  Videos 
+played via the youtubedl plugin were NOT even seekable, and ffaudio now 
+has an option to save the video to a file while playing, thus fully 
+eliminating the need for youtubedl!
+
+* Added feature where if one selects a song in the playlist while another 
+song is playing, advancing to the next song will jump directly to that song.
+
+* Added "Random Skin on Play" option (Audacious. feature req# 755) to Winamp 
+Skins interfaces (Gtk & QT) so that when set, the playlist advances, skin 
+theme changes to random installed skin.  Also added new preference checkbox 
+in [Settings].[Appearance] window to contol (Default: unchecked (false)).
+NOTE:  Skin does NOT change when just song-title changes in streams.
+Care was taken to ensure the same skin does not come up twice in a row.
+Feature only happens if there are at least 2 skins installed.
+
+* Set up configuration to install the new modern libadplug-based version 
+of the AdPlug plugin (Audacious plugin commit# a39bfd7) BUT retain and 
+rename the old Audacious-based local version to "AdPlug Classic" (audadplug) 
+resulting in having BOTH the old and new versions installed due to some 
+64 bit linux versions requiring a PATCH to libadplug that's not included 
+on some distro's current package versions.  The patch prevents Fauxdacious 
+from CRASHING whilst probing some streams - See Audacious bug# 759.  Since 
+Debian Buster, in particular, has drug their heels on updating libadplug 
+for MONTHS now, I've given up waiting and just included both versions for 
+the time being.
+
+* Abbreviate "multi-line" song titles to only display the first line in 
+the window titlebars and the "skins" versions of the playlist to stop 
+"garbling up" the playlist lines and the window title-bars.
+
+* Add config option to restore Fauxdacious's pretty (pre-v3.9b2) icons in 
+the Preferences Window (and may effect other icons in future) as Audacious 
+has removed many of their icons in favor of "themed" system-based icons, 
+which, at least on my system look flat, colorless, ugly, and inconsistant 
+with icons elsewhere in Fauxdacious.  The new option is:
+[audacious].use_classic_icons (boolean, default FALSE).  If set to TRUE, 
+Fauxdacious uses it's classic icons, otherwise, the ugly new ones.  This 
+currently only affects the [Settings] - Preference window, but will  
+possibly affect others in the future.
+
+* Merge in all of Audacious's massive redux of it's icons, QT-stuff, and 
+numerous other changes since January that I delayed implementing since it 
+required massive time and labor to merge while providing little if any new 
+functionality (and made the icons ugly too). :(  We are now "caught up" with 
+them as of the end of April except for a couple of things, namely their new 
+"object-oriented" playlist system (would require tremendous labor to change 
+over half the source files in the system with no gain in functionality).
+
+* Set up new "tmp_tag_file" for tags and cover-art for "temporary, one-off" 
+video streams (Youtube and Facebook), which "expire" and have to be re-
+downloaded if played more than a few hours later.  This permits us to avoid 
+having to periodically manually delete the build up of useless cover-art 
+images and cruft in our permanent "user_tag_data" file for what are (usually) 
+one-off viewing.  This new "tmp_tag_file" (and the cover-art files it 
+references) are deleted when playlists are cleared (fauxdacious is started 
+with the "-D" option).
+
+* Fixed Audacious-created bug that caused directories to be added as 
+invalid items in playlists when option to not unroll subdirectories was set.
+
+* Added support for custom effects settings in the equalizer-preset files.
+This option allows the current list of active effects plugins to be 
+customized and saved for specific songs, streams, directories and disks!
+For example if a specific disk, song, or stream requires the "Dynamic Range 
+Compressor plugin" to be used to sound properly, one can now have it 
+automatically activated for that entry but off or others so one no longer 
+need to manually turn it on for playing that entry!  The new config option 
+to enable this feature is:  [audacious].eqpreset_use_effects=TRUE.  A 
+new checkbox appears when saving equalizer presets (GTK/Winamp-GTK only) to 
+save the current effects plugin status in the equalizer preset file (.preset 
+only).  The "Auto" button must also be on in the Equalizer window.
+
+* Added support for directory-specific equalizer-preset files (like XMMS has):
+Use new config option:  "eqpreset_default_file=<filename>.preset".  The 
+XMMS default for this is "dir_default.preset".  This new option must be 
+actually set for directory-specific presets to work (along with the option: 
+"equalizer_autoload=TRUE".  The preset file with the specific name must 
+exist in the same directory as the song, and does not apply to subdirectories.
+Presets will be searched for:  1) the song directory (<songfile>.preset, then 
+the ~/.config/audacious[_instancename]/<songfile>.preset (as before), then 
+the song directory (<eqpreset_default_file>), then last (as before):
+~/.config/audacious[_instancename]/eq.preset.  Does not apply to streams, 
+URLs, disks, or other songs that are not files on the local file system.  
+(Cue-sheet files are still treated as files though).
+
+* Added support for CD / DVD - specific equalizer-preset files (name the 
+preset file name the disk-ID (CDs) or the disk title (DVDs) and saved in 
+as ~/.config/audacious[_instancename]/<disk-id/title>.preset.  
+(the config option: "equalizer_autoload=TRUE" must also be specified).
+
+(12/25/2017) Version 3.9-beta1
+
+* Added support for using user-created custom tag files for CDs, and 
+directories.  This permits the user to create a tag file for his own 
+"mash" CDs (ones that obviously aren't going to have track metadata or 
+cover art available for lookup online using CDDB, etc.  A new option under 
+cdaudio plugin options is "Allow Custom Tag-files" and, if checked, One can 
+play the CD and, while playing, use a text editor open 
+~/.config/audacious[_instance]/user_tag_data to grab all the paragraphs that 
+begin with "[cdda://?...]", save that to a custom text-based tag file called 
+~/.config/audacious[_instance]/<disk-id>.tag (disk-id is the calculated 
+freedb disk-id for the disk).  The next time the CD is played, the tag 
+metadata for the tracks will be fetched from this file.  A custom cover-art 
+image can be stored under 
+~/.config/audacious[_instance]/<disk-id>.{ping|jpg|jpeg} and used as the 
+cover art image for the CD.  
+
+To create a custom tag-file for a music directory (ie. for *.wav files, etc. 
+that don't support tags, one can create a tag file, similar to 
+~/.config/audacious[_instance]/user_tag_data in a given music directory 
+named:  /path/to/your/music/directory/user_tag_data.tag.  Within this file, 
+the music file-name keys are specified as just the file name (without the 
+"file:///path/.../" part since the tag file only refers to the files 
+in that directory.  This can prevent excess clutter in your main 
+user_tag_data file!  I created this so when I burn a "mash" CD, I put the 
+*.wav track files into a subdirectory and on my computer to save wear and 
+tear on the CD drive, I listen to the tracks from the .wav files on my 
+hard drive, and wanted to have the track metadata and cover art associated 
+with them then!
+
+* New cover-art helper script ("FauxdaciousCoverArtHelper.pl") which can 
+be used by Fauxdacious when playing a CD or DVD to attempt to fetch 
+cover-art (and for CDs: any missing track metadata) from the web.  
+Add the line "cover_helper=/usr/local/bin/FauxdaciousCoverArtHelper.pl" 
+in the [audacious] section to your ~/.config/audacious[_instance]/config file.
+
+* Catch up w/Audacious 3.91 GIT by merging all commits through a78fd24 and 
+plugin commits through .  Rejected plugin commit:  957d460 (we handle the 
+recording gui slighly differently.  Plugin commit a39bfd7 (Adplug) is on hold 
+pending further testing and review, and a patch from us is awaiting review 
+by the Audacious team.
+
+* Audacious commit a117aba: "sndfile: Don't try to seek beyond end of file. 
+(closes Audacious bug #756).
+
+* Merged Fauxdacious commits:  45f08c5-541bf73 
+and plugin commits: 641d553-7fe3c80
+
+* Fix rare sigfault when switching back to an aac stream (commit: cba8621)
+
+(06/01/2017) Version 3.83-final
+
+* FIXED filewriter plugin to "fail over" to "unknown" for the filename if 
+the playing filename is too long or invalid (needed for youtube streams, etc.).
+Also fixed a potential null-pointer reference.
+
+* Added "close after song chg." checkbox for STDOUT output to "close" STDOUT 
+when either song stops playing or record is toggled off in order to avoid 
+errors in the created output stream.  Otherwise, output to STDOUT accumulates 
+as a single long stream until recording stops.  This allows for combining 
+multiple songs into a single output file, but can produces (somewhat harmless) 
+errors at end of playback in such files.  The default is TRUE (checked) 
+(properly close and prevent errors and only record the last song (overwrite).
+
+* Add fixups for ugly but common stream title formats.
+
+* Mandate SDL2 in Fauxdacious main, remove choice to use SDL1 in plugins.
+
+* Merged all Fauxdacious commits thru: 3b24d61; 
+and plugin commits thru: a666f70.
+
+* Merged Audacious commits: 7886b7b; and plugin commits:  #9816dc6, 4f327c6, 
+10abf7d, 94d95fc, b13a35d.
+
+(06/03/2017) Version 3.83-beta3 (Windows)
+
+* Added DVD-Player Plugin to Windows version, fixed "smudgy menu" problem.
+
+* Updated FauxdaciousURLHelper program (Windows EXE) to correspond to 
+latest script version.
+
+(05/25/2017) Version 3.83-beta3
+
+* FIXED bug that occasionally hangs Fauxdacious on startup when loading up 
+with a wild-card list of files (usually .wav files), 
+ie:  fauxdacious ~/Music/*.wav (Fauxdacious commit #8e3ba79).  
+This was due to a mutex deadlock in our song-specific equalizer-preset 
+feature code.
+
+* I gave up and made SDL v2 a REQUIREMENT now for Fauxdacious itself (The 
+new DVD plugin already requires SDL2).  This is due to the fact that the 
+nasty old issue of gtk-window vs SDL segfault kerfuffle resurfaced again 
+(see plugin commit #5c09006 for a brief history of this issue), so now we 
+will properly initialize SDL in main() since SDL seems to want to pretend 
+like it has the "main()" function and must be initialized very early (now 
+in main()) in order to play nicely with gtk windows created later 
+(Fauxdacious commit #cec5946).  TODO:  Add this to the configure script!
+
+* Added cover-art via the user_tag_file option for both DVDs and Audio CDs.  
+User must manually obtain cover art images and store the image files, rename 
+them to the same name matching the respective CD or DVD title (shown in the 
+playlist) and place them either in the [dvd|CDDA].cover_art_path (config 
+file option) or the default: ~/.config/audacious[_instancename]/ directory 
+(if not specified) - (plugin commits #5b0f6d7 and #cce218a).  The manual 
+requirement is currently due to my inability to find free urls for reliably 
+locating cover art programatically by searching with the information at 
+Fauxdacious's disposal (the CD/DVD "Title" string and disk IDs).  If I or 
+someone else can find and provide URLS for such libraries and scrape logic 
+(ok if separate ones for Audio-CDs and/or DVDs), I'll be happy to test and 
+include in a future release!
+
+* Merged (mostly) our stdin streaming feature with that of Audacious.  
+Our implementation of this feature predates Audacious's and required 
+specifying the file extension (as "stdin://-.mp3" for mp3) but theirs does 
+not ("-").  Since they now support stdin piping, including seekability via 
+buffering during probing, I've now REMOVED my (now ancient) "hacks" to the 
+sndfile, vorbis, and gio plugins previously needed to support stdin streaming 
+without seeking, and remerged their latest versions of these plugins 
+(less maintenance for me - yay)!  I'm leaving it in ffaudio for now though 
+as it handles so many different formats.   (commit #8524685, and plugin 
+commits # 7b0be4f, 9d4cfa3, 240e090 and 2ba6b75)
+
+With Fauxdacious, one can still include the extension (the old Fauxdacious way) 
+and save the overhead of probing all the plugins, however, the extension is 
+still REQUIRED for non-"Input" plugins such as cue-sheets ("-.cue") and 
+playlist files ("-.pls", etc.), as these do not "probe" to determine what's 
+being piped in!  Believe me, I spent a day trying to get the Fauxdacious core 
+to "probe" playlists and cue-sheets piped in via stdin, but the underlying 
+Audacious architecture simply doesn't permiti it as written.
+
+Also removed the added Fauxdacious requirement of specifying "stdin://-" 
+(instead of just "-"), though the old way is still acceptable.  NOTE:  This 
+did result in one minor regression:  when piping a simple line-separated list 
+of items to play (ie. "ls *.mp3 | fauxdacious -"), one must now specify 
+either "-.txt", "-.ls" or "-.m3u" (doesn't matter which) instead of just "-" 
+as I've removed the old code in main() that specially handled this and now 
+use the standard m3u playlist plugin for this.  
+
+* Instance numbers (single digits) can now be combined with single-letter 
+command-line options, ie. "fauxdacious -Dc2" and instance# 0 is now a synanymn 
+for th20170429_Fauxdacious3.83-betae default instance (name: audacious) 
+(commit #712b923).
+
+* Merge in all Fauxdacious commits through 712b923 and plugin commits 
+through b4882eb.
+
+* Merge in Audacious commits:  20ecbff, 9303781, baabb80, 79dcc0f, e859ae3, 
+11b4856 (plugin commit a7ba191 has long been part of Fauxdacious).
+
+(04/29/17) Version 3.83-beta2
+
+* Added DVD-playing plugin (Linux version)!  It uses libdvdnav and libdvdread 
+to play dvds, including menus.  Issues remain for getting this to work in 
+Windows.  This is a first stab at this and it seems to work pretty well so far 
+for most DVDs I've thrown at it, but there are several rough edges that remain 
+that I have not been able yet to satisfactoraly address:
+
+WARNING:  Playing DVDs that contain CSS encryption DRM requires a special 
+decrypting software library that is ILLEGAL in many jurisdictions.  This 
+plugin software does NOT contain such decrypting software, but can make use 
+of it in jurisdictions where such use is not prohibited.  It is the sole 
+responsibility and liability of the user to ensure that such decrypting 
+software is legal to use in their jurisdiction before installing and using 
+such software with this plugin or any other software and / or hardware capable 
+of playing DVD discs.
+
+1)  A small number of menus display with artifacts despite my best efforts 
+to flush buffers and force all frames to display.
+
+2)  The audio stream on rare situations does not always play in the desired 
+language.
+
+3)  Seeking via the timing slider seems to work well, but the displayed time 
+is not meaningful due to the way DVD chapters continue playing after the 
+selected chapter completes.  
+This needs a lot more thought on how to best handle.
+
+4)  When "playing" a "menu" that has no audio stream, the Fauxdacious 
+[Stop play] button will not stop play of the menu, requiring the user to 
+click the [x] button in the upper right corner of the video window to 
+stop play.  This is a limitation of Audacious (because Audacious is an 
+AUDIO player)!  Fixing will require either adding a silent "dummy" audio 
+stream to such menus or rewriting the underlying Audacious code (which I 
+don't plan to do).
+
+By default, Fauxdacious will add all tracks to the playlist 
+(including menus), even though via the menus, most DVDs can be controlled by 
+playing only the first track (track 0).  Having the others displayed in the 
+playlist enables playing of the individual VOBs found on the DVD, useful for 
+playing DVDs that require you to view a bunch of previews before taking you 
+to the main menu or movie feature!  To eliminate this "clutter" from the 
+playlist, the new config option [dvd].title_track_only to TRUE.
+
+Other new config-file options:
+
+[dvd].first_track_only (boolean, default FALSE).  If set, only Track 1 (the 
+2nd track, almost always the main "movie" track) will be displayed in 
+the playlist.  If both this and [dvd].title_track_only are set to TRUE, then 
+both Track 0 (main menu) and Track 1 (main movie) will be added to 
+the playlist.  If neither set, then all tracks will be added to the 
+Fauxdacious playlist.
+
+[dvd].nomenus (boolean, default FALSE)  If TRUE, menus will not play, but 
+will still be processed - the first or default button will be pressed.  
+This is also the course of action if [dvd].play_video is FALSE since, in that 
+case, no video screen is shown (audio only plays).  NOTE:  May not work 
+ideally with all DVDs, (ymmv).
+
+[dvd].play_video (boolean, default TRUE)  If FALSE, only audio is played.
+
+[dvd].highlight_buttons (boolean, default TRUE) - Draw a grey rectangle 
+around each menubutton showing the region in which to click the mouse to 
+activate.  (We do not currently do the button subpicture palettes and 
+highlighting (hard), so this will have to do for now).
+
+[dvd].menudrain (boolean, default FALSE)  If TRUE, "drains" any remaining 
+unwritten audio/video frames before activating the menubutton if it is 
+activating another menu.  Also causes display of the menu to be totally 
+skipped if [dvd].nomenus is also set.  If set, some menus will not be 
+displayed properly, ie. appear "smudgy" or have buttons missing, or may not 
+work properly.  If not set (default), you will likely experience some delay 
+and some remaining music play between pressing a button and the next menu 
+being activated.
+
+[dvd].nomoviedrain (boolean, default FALSE)  If TRUE, prevents "draining" 
+any remaining unwritten audio/video frames before activating the menubutton 
+if it is activating a movie.  May be necessary for some DVDs to work 
+correctly (ie. go to the right feature and play the right audio language, 
+not abort with an "Assert 0", etc.  Leave FALSE unless you run into a 
+specific DVD that doesn't work properly, they try setting to TRUE and 
+reloading the DVD.  If TRUE, you may get some garbled sounds for less than 
+a second after activating a menu button before the movie starts.
+
+[dvd].use_cdtext (boolean, default TRUE)  If TRUE, include the title text 
+from the DVD as the titles as part of each track, otherwise, "dvd" is used.
+
+[dvd].disk_speed (integer, default 2)  Set the default speed the hardware is 
+capable for (similar to [cdaudio].disc_speed.
+
+[dvd].device (string, default "/dev/dvd")  The device name of the dvd drive.
+
+[dvd].fifo (string, default "fifo.mpg")  Name / path of the fifo for the dvd 
+reader and writer threads to share.  If only the name is given, it is created 
+in the $HOME/.config/audacious/ directory.  You should not need to change this.
+
+[dvd].video_windowtitle (string, default "")  Appended, along with a hyphen 
+to the DVD title on the video window titlebar 
+(like [ffaudio].video_windowtitle).  The author uses "Fauxdacious DVD".
+
+[dvd].video_xmove, video_xsize, video_ysize, and video_qsize:  (integer) 
+similar to the same options in [ffaudio].  Recommended settings:  1, 0, -1, 
+and 5 respectively.
+
+NOTE:  The new DVD plugin must be installed separately.  After running 
+"make install" to install fauxdacious-plugins, first, make sure that libdvdnav4 
+and libdvdread4 are installed, then, simply switch over to the 
+fauxdacious-plugins-3.8/src/dvd/ directory and run "make install" again from 
+there to install the DVD plugin!  In Fauxdacious itself, under 
+Settings.Plugins.Input.DVD Plugin.Settings, make sure that the 
+"Play video stream in popup window" box is checked.
+
+* Includes all Fauxdacious commits through 8242198; and plugin commits 
+through 2ecd6fd.
+
+* Merged Audacious commits:  a127b46, 2b17e03, 221c248, 6386996, and b55246c.
+
+(03/18/17) Version 3.83-beta1
+
+* FIXED occasional "black screens" when re-starting videos on Windows version 
+(never affected Linux/Unix versions)!
+
+* FIXED video screen not always shutting down when Fauxdacious is stopped 
+mid-play in a video on Windows version (never affected Linux/Unix versions)!
+
+* Eliminated "hackey" code to always "rescan" ffaudio plugin for "early" 
+initialization of SDL2.  This will (hopefully) now permit release of our 
+video-capable ffaudio for users of mainline Audacious.
+
+* Added ability to play Youtube and Vimeo videos directly (with seek!) via new 
+optional user-supplied helper program/script (similar to and which REPLACES 
+the recently-added "tunein_helper" script: getTuneinStream.pl).  With this new 
+option ([audacious].url_helper), one can use this script to alter ANY url!  
+The new (included) script, in contrib (which will handle youtube, and vimeo 
+urls via a regular expression) is FauxdaciousUrlHelper.pl.  Copy it from the 
+contrib directory to your executable path, and 
+add "url_helper=FauxdaciousUrlHelper.pl" in the "audacious" section of your 
+config file and remove the "tunein_helper" line.  
+NOTE:  If running M$-Windows, a binary version (FauxdaciousUrlHelper.exe) is 
+already in your path with fauxdacious and faudtool)!  You will, however, need 
+to add the "url_helper" line above to your config file 
+(/Users/<your_userid>/AppData/Local/audacious/config).  For Windows, you must 
+also add another section ([neon] and the line:  "ignore_ssl_certs=TRUE" in 
+order to play youtube and vimeo videos!
+
+* Upgraded libneon and added SSL capability (to get the https: stream urls 
+returned for youtube and vimeo to play).
+
+* Merged in audacious plugin pulls:  fb2d50a, 4c38261, and 221c248.
+
+(03/08/17) Version 3.82-final
+
+* Added the ability to capture the thumbnail images ("cover art") associated 
+with youtube video streams.  This also involved changing the 
+youtubedl_metadatahelper.pl script.  It now uses youtube-dl to fetch and 
+download the thumbnail file when the other tag metadata is fetched.  
+By default, it stores them in the /tmp directory, but you can change this in 
+the aforementioned perl script.
+
+* GTK equalizer:  Added the [Auto] checkbox, (and relabeled the 
+[Reset to Zero] button to [Flat] to make room for it), and added a two-state 
+indicator icon to the [Preset] button to indicate whether a song-specific 
+preset file is currently in use (so the GTK equalizer now works the same way 
+the Winamp Skins equalizer).
+
+* Fixed playlist column headers in the QT interface to work like the GTK 
+version, labeling all unlabeled column headers using the same abbreviations we 
+used in GTK.  Also on the QT side, there's an optional "Now Playing" column 
+(header was blank, but is now labeled "On") which was useless (always blank), 
+but now shows an asterisk next to the currently playing song (The GTK side does 
+not offer this column, but the currently playing song is displayed 
+in bold type).
+
+* Tweaked instance name / dbus handling by adding instance names to the 
+window titles (as Audacious does with their instance numbers) and also making 
+numbers valid as instance names allowing one to specify the commandline option 
+"-#" (ie. -1, -2, etc. in lieu of "--new=1, etc.) for compatability 
+with Audacious.  The config directories work the same as Fauxdacious instance 
+names with underscores, ie. ~/.config/audacious_1 
+(~/.config/audacious_instancename) instead of ~/.config/audacious-1, 
+etc. though.  TODO:  Quitting the QT interface exits with a bunch of 
+"dbus errors" (warnings) (even before these changes) that I haven't been able 
+to explain, though everything still shuts down normally.
+
+* More leaks, more tweaks to ffaudio-core.cc (video playing) and others.  
+So far this seems to have pretty much eliminated memory-usage growth creep when 
+using SDL1 and further reduced it for SDL2.  Audio-only in both appears 
+to be leak-free.  I have not yet been able to completely isolate the source of 
+the slight growth in SDL2 (over repeated play of a video) though.  Also added 
+new config option:  [ffaudio].video_render_scale.  Default is 1, but valid 
+values are 0, 1, or 2.  Sets the SDL_HINT_VIDEO_RENDER_SCALE_QUALITY 
+hint value.  I think I also have the "black video screen on replay" issue on 
+the Windows version fixed.  TODO:  The only remaining issue is that the video 
+window still doesn't always close when exiting Fauxdacious with the video 
+window playing (on Windows version only - this was never an issue except 
+on Windows).
+
+* Merged in Audacious pull request #25: "Add SOCKS proxy support." as written.
+
+* Merged ALL Audacious pulls since 2119d19 through b216d4e; and 0ee73f2, 
+d1463c1, 8700688, 217a39f, 4da2cb8, 236ee1d, d6e115e, f47bede; and plugin 
+pulls since ab45ec5 through 585518c (everything through 2/13), including their 
+resolution of the issue with plugin pull# eaf7949; and 5e9fc66, f4c9b02, 
+5b50d20, and 400825a.
+
+(02/16/17) Version 3.82-beta2
+
+* Tweaked and generally tidied up ffaudio-core.cc a bit to make sure AVPackets 
+are efficiently initialized and freed properly and slightly optimized play by 
+eliminating some redundant video function checks and inlining some calls while 
+hopefully eliminating rare and occasionally random seg-fault when stopping 
+audio stream play.  There still appears to be a slight bit of memory 
+leakage? / growth creep in video play, but my guess it's somewhere deep in 
+the bowels of SDL.  
+
+* Changed The default "video_qsize" value from 8 to 6 and Added new 
+config option: [ffaudio].allow_highdpi (default FALSE) to enable 
+SDL2 SDL_WINDOW_ALLOW_HIGHDPI flag.
+
+* Merged in all latest QT stuff (finally) and tested and seems to work!  
+NOTE:  I did not build it into this release to save file sizes, so you must 
+recompile yourself if you want QT configuring with "--enable-qt"!  
+NOTE2:  Audacious's QT interface is rather behind, for example Equalizer 
+presets and Plugin parameters are NOT currently configurable from the GUI.
+
+* Merged in Audacious pulls# 40237df, 6d9acec, bb439b0, d17911e, 425aa54, 
+2119d19; and plugin pulls# ab45ec5.  Did NOT merge plugin pull# eaf7949 due to 
+compile error under g++.
+
+* Includes all unreleased Version 3.82-beta1 changes (below):
+
+(Not released) Version 3.82-beta1
+
+* Added new config file option:  [audacious].eqpreset_nameonly (boolean) 
+which causes the first question mark (if any) and anything following it in a 
+URL to be removed for purpose of exporting song-specific equalization presets.  
+This is needed for some live-streaming station URLs that change "keys" 
+dynamically and regularly.  Default is FALSE (old behavior - keep the full url 
+base name), add and set to TRUE for the new behavior.  For example, this will 
+affect youtube-dl urls as well, as previously the preset file would be 
+exported as "watch?xxxxxx.preset" where "xxxxxx" was the actual video id.  
+With the new option, exporting song-specific equalizer presets will be the 
+same preset file "watch.preset".
+
+* Fixed the exporting of song-specific equalization presets for 
+cuesheet (.cue) files.  This worked before Audacious apparantly fixed the 
+file-name used when opening a song for playback from it's cuesheet filename 
+to the actual referenced file-name, breaking our logic.  As a result, the 
+equalization presets exported for a cuesheet file will apply to all tracks 
+in the cuesheet.  They are still exported (reguardless of track) as 
+"<filename>.cue.preset".  I made the decision to do it this way assuming that 
+all tracks in a cuesheet are (very likely) recorded with the same 
+equalizer settings.
+
+* Merged in Audacious plugin pulls# 2c267a2
+
+(01/30/17) Version 3.81-final:
+
+* Added ability to directly play tunein.com radio stations using the station's 
+tunein.com website url (as opposed to having to manually dig out the actual 
+live-streaming urls).  This requires the new helper script in the contrib/ 
+directory (getTuneinStream.pl) installed in your path, and installing the 
+new Perl modules "LWP::Simple" and "Tunein::Streams" from CPAN (www.cpan.org).  
+
+(01/13/17) Version 3.81-beta2:
+
+* Added headers to all columns in GTK playlist.  Previously, some column 
+headers were not shown since they were longer than the default column width 
+(as determined by a boolean array ui_playlist_widget.cc:pw_col_label).  
+I added a separate array of "short" names (columns.cc:pw_col_headers) so that 
+all columns are now properly labeled and understood without making them 
+unnecessarily wide.
+
+* Merged in Audacious pulls# 361a6fc, c3b0659, b96fbd4, c1fe83b, 11e4915, 
+8bea900, 25dd624, 65af13f; and plugin pulls# 25dd624, 0bcc904, 0abceec, 
+eb3e8a8, 45c1f38, and a21e4a2
+
+(12/27/16) Version 3.81-beta1:
+
+* Fixed Audacious-rejected bug# 681 to make pause just do pause, as it should!
+
+* Fixed audtool --help to work even if unable to connect to dbus.
+
+* Merged in Audacious pulls# 5297008, a67d6be, b321ee5, and c3287dd; and 
+plugins pulls# bf6661e, 403020b and 8174f13, addressing Audacious bugs: 560 
+and 685.
+
+* Added comments as another optional column field to the playlist table 
+(GTK interface) and made it sortable.  I had started to add this and (on the 
+SAME day, the Audacious team added it, so I dropped my work and merged theirs!  
+The files I changed were almost identical to their changes, but they had 
+finished the ones I hadn't gotten to).  I wanted to make each column sort 
+when clicking on the header (like my Tk::HMListbox), but this was going to be 
+a huge boondoggle.
+
+* Started looking into adding the ability to sniff out the streams in 
+tunein.com online radio stations (and then play them), but this also appears 
+to be a ton of work for a small benefit, maybe someday when I get another 
+wild hair up my nose!
+
+(11/21/16) Version 3.8-final:  
+
+* Fixed bug in "live_flv" streams that incorrectly reported a stream length 
+of "419:57:08" when the length could not be determined, and removed the 
+special "NonSeekable" tag we had added previously to work around this and hide 
+the position slider and all the supporing code.
+
+* Merged in Audacious pull# 1415ff8 and closing Audacious bug# 680.
+
+* Fixed two huge memory leaks in ffaudio by using smart-pointers to open 
+input file, frames, and properly flushing and destroying queues.
+
+* Added queueing for audio packets when playing video.  This makes for 
+smoother video-play while allowing for a reduction in the queue-size which 
+improves audio-video syncing.  The default "video_qsize" value is now 8 
+instead of 16.
+
+* Added separate config option [youtubedl].video_qsize (default: use 
+[ffaudio].video_qsize) for Youtube-DL video streams, which seem to need a 
+bigger queue.
+
+* Removed the [Services].[Eject CD] from Windows version, since it doesn't 
+work anyway because it requires a command that is not included with Windows.
+
+* Added a few lines of code to copy selected playlist entry URLs / files to 
+the PRIMARY selection when copying so that they can be retrieved / pasted 
+into other applications.
+
+TO DO:  Windows version does not always shut down the video window when 
+shutting down without stopping playback first.  Windows version sometimes 
+produces black playback window when stopping and restarting play on same item 
+fixable by advancing playlist.
+
+(11/8/16):  Version 3.8-beta3:  
+
+* Added Youtube-DL transport plugin to live-stream videos from Youtube, 
+Vimeo, and other sites that require using a helper application such as 
+youtube-dl in order to play outside of a web-browser.  The plugin recognizes 
+any URL with the "ytdl://" prefix and converts that to the proper "https://".  
+Simply grab the URL off Youtube and paste it in as a URL in Fauxdacious, and 
+change "https" to "ytdl" to add to your playlist.  The video is downloaded and 
+piped directly to Fauxdacious without storage to a hard drive, therefore, 
+there's no ability to seek.  To do that, simply use youtube-dl to download the 
+video and then add the downloaded file to Fauxdacious.  NOTE:  This type of 
+piping will require a good internet connection or may require downloading 
+lower-quality video formats, otherwise, a buffer-underrun may occur ending 
+video playback.  The user may specify / configure the youtube-dl (or other 
+helper application) using the new configure option:  [youtubedl].command - 
+the default string is:  
+"youtube-dl --no-continue --no-playlist --no-cache-dir --no-progress 
+--no-call-home --youtube-skip-dash-manifest --prefer-ffmpeg -q -f mp4 
+--no-part".  
+Do NOT add the "-o -" to feed to stdout, as Fauxdacious does this for you.  
+Four additional related user config variables have also been added:  
+
+[youtubedl].video_windowtitle (default "Youtube-DL") for specifying what to 
+add to the window titlebar (set to "FILENAME" to get the url); -OR- use the 
+included metadata helper script (youtubedl_metadatahelper.pl) to fetch the 
+title and author, and then set (in the config file):
+
+[audacious].youtubedl_tag_data=TRUE (default FALSE)
+
+[youtubedl].metadata_helper=/usr/local/bin/youtubedl_metadatahelper.pl 
+(default empty)
+
+[youtubedl].save_video (default FALSE).  If true, a copy of the video is saved 
+out to either the file path specified by [youtubedl].save_video_file or 
+"/tmp/lastyoutubevideo".
+
+NOTE:  If you are compiling from scratch, you'll need to switch to the 
+src/youtubedl directory and do a separate make and make install there as it's 
+not currently int the configure script.  There's also slim to no chance that 
+this plugin will work in M$-Windows.
+
+* Fixed major glitch discovered during all this that caused the video to 
+freeze (audio kept playing) if one had a video playing and a url to a 
+"live-flv"-based radio stream in the playlist and hovered their mouse over it 
+(causing it's metadata to be fetched).
+
+* Added special metadata tag (that can be added to the custom tags file 
+(user_tag_data) and that the youtubedl_metadatahelper.pl helper script also 
+adds to youtubedl_tag_data called "NonSeekable", which if set to 1 prevents 
+display of the file-positioning slider.  This is helpful for certain streams, 
+including youtube-dl videos that include a "length" (time) value but which 
+are non-seekable.  (If the slider is visable in such a stream and the user 
+attempts to adjust it (into the future) playback seizes up and Faudacious must 
+be killed to abort).
+
+* Fixed small glitch in the Lavadacious skin so that playlist window now 
+expands properly.
+
+(10/29/16):  Version 3.8-beta2:  
+
+* Added config-based file for user-added tag metadata and new 
+config-file option:  [Audacious].user_tag_data.  Specify TRUE to activate 
+this feature, FALSE or omit to keep old behavior.  This permits user to save 
+"song info" for streams (urls) and other files who's decoder does not permit 
+saving tag metadata into the media file itself.  I added this to be able to 
+assign readable titles to radio streams that otherwise just show the (useless) 
+url in the title making it difficult to see which station I'm playing.
+
+* Added the song info popup "balloon" that currently pops up over the 
+playlist when the user has the existing option "show_filepopup_for_tuple" 
+option set to TRUE to also pop up now for the currently-playing song when 
+user hovers the mouse over the middle (equalizer / time part) of the main 
+window (Winamp Skins interface) whenever the main window is "shaded" 
+(rolled up into a thin line).  This now makes it possible to see what is 
+playing without having to pop up the playlist (since nothing regarding the 
+current song is otherwise displayed when the main window is shaded)!
+
+* Massively improved video window-resizing, tweaked video-scaling smoothness 
+to improve video quality back to SDL1 level (fixed small degradation in SDL2).  
+Added resizing feature to allow user to shrink video window below a 
+user-specified size (default 149x149, user-configurable by the 2 new config 
+file variables:  [ffaudio].video_doreset_width and 
+[ffaudio].video_doreset_height) and have it snap back to it's 
+originally-requested size.  
+
+* Fixed video-play to work in headless mode.
+
+* Additional minor tweaks to improve video efficiency.  
+
+(10/20/16):  Version 3.8-beta1:  Snapshotted latest Audacious v3.8 GIT as of 
+2016/10/13 and manually refactored and reapplied all Fauxdacious features and 
+changes.
+
+* Rewrote the ffmpeg plugin (ffaudio-core.cc) to use SDL2 for video and latest 
+ffmpeg / avcodec API while remaining backward-compatable with prev. ffmpeg 
+release (now compiles without warnings (these were all 
+"depreciated" warnings).  This also eliminates muting issues on playback when 
+using the SDL "Output" audio system and the nasty manual-editing of separate 
+Makefile and extra.mk files for Linux and Windows.  Also refactored and 
+tweaked to slightly better optimize video performance and include all 
+Audacious v3.8 improvements possible (excluding their new "SmartPtr" and 
+"Scoped" structs) which I was not able to get fully working compatably with 
+Fauxdacious video features.
+
+* Added a [Close] button to the Equalizer window in the GTK interface.  
+
+* Merged in post-3.8 final commits:  97257b6 and (plugins) 43a6bf1.
+
+(05/31/16):  Version 3.74-beta2:  Fixed glitch that prevented creating 
+song-specific Equalizer Auto-presets for Cue-file based songs.  Added the 
+song / video title to the Fauxdacious Video window titlebar.  Merged Audacious 
+commits:  3be5957, 450984e, e12ae5d, 2349933, d768ae1, 3cd305e, 60c4632, 
+475490c, 5384dc5, b855336, b34cbdb, c729ff5, ad0a172, 6b5bfae, 96a19b5, 
+5a8d6e5, and Plugin commits:  4ededd4 and ebf17e6.  Eliminated (most) compiler 
+warnings in ffaudio-core.cc from "depreciated" AVCodec stuff.  Obtained a 
+working version of libcue and compiled that in.  Updated the Win32 build notes 
+in the contrib directory to reflect additional Fauxdacious requirements and 
+fixes for module compilation issues.  
+
+TODO:  Only known unresolved issue (Windows) is audio is sometimes lost when 
+jumping from some videos to audio playlist items when using SDL Output plugin, 
+non-issue if using the new Waveout plugin.  Also probably need to add a 
+"file-association" in the Windows setup wizard to associate .xspm 
+(playlist files) with Fauxdacious.  Someday, if I really get ambitious, I 
+might write / modify a plugin merge in "youtube-dl" functionality in order to 
+play Youtube video URLs directly, patches / help / advice welcome!  When 
+Audacious v3.8 comes out and settles down, I should remove the "beta" moniker 
+as Fauxdacious seems pretty stable now.  I need to create a DEB package too, 
+but looking at the documentation howto for that just gave me a headache.  At 
+least John Lindgren's Audacious build instructions for Windows were concise 
+by comparisen!
+
+(05/27/16):  Version 3.74-beta1:  Built Windows installable binary and 
+bundled with Inno Setup Wizard.
+
+(05/18/16):  Version 3.73-beta2:  Changed multi-instance feature to use unique 
+config directories now (like the new Audacious multi-instance feature does) 
+instead of just unique config files.  The default config directory remains 
+"~/.config/audacious/" whereas new instances created with --new=instancename 
+are now "~/.config/audacious_instancename/".  The config file is now once 
+again always "config" within the directory "~/.config/audacious_instancename/" 
+instead of "instancename".  The default instance name remains "audacious" so 
+that Fauxdacious shouldn't create a "~/.config/audacious_audacious/" 
+directory, even if that instance name is specified.  Also updated the manpages.
+Commits merged:  60d1ce5, 2908e84 (taylored for our instance-names), 
+9dde289, 34d5a2d, 7abddc7, c75b543, 66767b6, 8e5122c, 1cf1a81, d74d231, 
+e31774c, 577298c, 32dbd44, 02fb683, 3aaa228, f208db4, 6087afd, 1c8d8e0, 
+8f3fcc4, and 1c9c04c.
+
+(05/13/16):  Version 3.73-beta1 Released.  The Audacious Team has been very 
+busy of late fixing bugs and adding features for a future 3.8 release and I'm 
+having a hard time keeping up with all of their changes (and rejections)!  
+I've decided to call this release the first beta of version 3.73, skipping 
+3.72 due to many 3.8 GIT fixes and features included from their latest 
+development commits.  Some of their recent commits have involved moving and 
+combining code from many source files and QT features which I have not had 
+the time or patience to do, test, and include here, so I have focused my 
+efforts on cherry-picking commits that actually fix things and add features 
+for users in this release, and included a few minor touches of my own!  
+Audacious bugs/features fixed/added and closed by this release:  628, 629, 
+630, 637, and 638.  Commits merged:  d4e7a38, 149ceb2, 91182a1, 44de6de, 
+762a447, 1d5ae03, 54abb4e, 10dad29, ed2f46f, 59ab0aa, ecbc461, 0eefebb, 
+507f3b0, 4558f91 and perhaps a few others I forgot to write down.  Pretty 
+much through May 6th or so, unless listed here.  I did reject 
+(specifically 63b0f41 (video needs SDL), e19cf1d, 2908e84, 45d6887, 
+and 77ae4c6) ones involving their new multiple-instance feature for now as 
+we already long have that implemented in a different way, but may incorporate 
+their separate configuration directory aspect of that later.  Theirs appears 
+to use instance numbers and instance-specific configuration directories 
+whereas ours already uses instance names and only the "config" file itself 
+is instance-specific.  I also have neglected to update many QT-specific 
+commits as I don't currently compile that in nor use it and probably won't 
+unless people start specifically asking me for it.
+
+New Fauxdacious-only features implemented include new "set-volume-relative" 
+audtool option (rejected feature#637), The "About" popup window is now 
+toggleable by the lower-right corner button in WinAmp skins (previously you 
+had to press the <Esc> key to close that popup).  Also Fauxdacious will now 
+no longer leave the "Record/Dub" feature enabled when closed and later 
+reopened, a major annoyance that has bitten me a couple of times 
+(fixes rejected bug#629).  I've also updated the Lavadacious skin to clean up 
+some titlebar and other apparance issues.  Also added new violet version of 
+the Default skin (DefaultViolet) and added a gtk-2 theme portion to the 
+Lavadacious theme.  Added a "Changes" file.
+
+(4/29/16):  Version 3.71-beta3 Released.  Removed debug output used to 
+fix/verify the popup fix in the last version. Merged in cherry-picked 
+Audacious v3.72 commits: 2113b3d, 6ed0f32, 133802e, fcbb689, and 4d1c41e thus 
+closing bug#627.  Iâve also got a shiny new machine that also has 
+Windows-7 Professional 64 bit on it with a hard drive big enough to install 
+all three dozen or so libraries on it, so hopefully soon, I can begin 
+building a Windows binary version to be combined with the free 
+Inno Setup Wizard!  
+
+(2/26/16):  Version 3.71-beta2 Released.  Seems to fix the popup 
+"missing file" error message mentioned at the bottom of the post. Also 
+includes most recent Audacious GIT update commits through 2/26!
+
+(12/13/15):  Version 3.7-beta2 Released, fixed annoying error msg. popup that 
+occasionally comes up saying it can’t find a 
+(should've been deleted) playlist.
