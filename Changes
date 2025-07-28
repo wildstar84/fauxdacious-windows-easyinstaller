@@ -1,4 +1,277 @@
-Version 4.4-final [Updated 07/27/27]:
+Version 4.5-final [Updated 7/22/2025]:
+
+This release provides numerous improvements to the "Skins" interfaces, 
+minor improvements to the Qt and Moonstone interface playlist displays, 
+numerous minor code and interface cleanups and polishing, removed support for 
+.m4v videos (never worked properly), and all applicable Audacious changes 
+in their latest v4.5 release.  See the gory details below and in the 
+git commits.  Also Egnrse (https://github.com/egnrse) has been kind enough to 
+create installable Fauxdacious packages for Arch Linux and has added them to 
+their "AUR" repository (See Fauxdacious issue #20)!  For best results, All 
+users should also take this opportunity to make sure that their Perl modules:  
+StreamFinder, LyricFinder, LWP::Simple, LWP::UserAgent etc.; and Fauxdacious's 
+helper-scripts are all up to date!
+
+I've also broken with recent tradition and decided to release a new Windows 
+release of v4.5-final!
+
+The Gory Details:
+
+* Updated transiflex translation files.
+
+* Hopefully (I don't have Qt6 installed yet) eliminate all Qt6 depreciation 
+compiler warnings.
+
+* Queue-manager window (Qt) - Add ability to rearrange order of entries via 
+drag & drop (Audacious change), and add a dedicated [Close] button to work 
+more like the GTK version.  Also some other minor code changes to bring code 
+up to date with Audacious.
+
+* Playlist display (non-skinned interfaces):
+
+1) Include file extension in the File Name column as part of the file-name 
+(Audacious change), but also add new checkbox option (default checked) for 
+this under Settings.Appearance:  "Include file ext. in Filename Column" to 
+allow user to still show the old way (filename only, no extension) by 
+unchecking.  Feature applies to GTK, Qt, & Moonstone playlist display.  GTK & 
+Qt settings have separate setting for this, & Moonstone plugin uses the Qt 
+setting.
+
+2) Fix long-standing Audacious bug affecting the width of the last column in 
+the GTK version.  Last column is expanded to fill remaining window space, but 
+wouldn't remember the user-set width on restart.  Should work now, as this 
+widget has a horizontal scrollbar.
+
+Note:  In the GTK version, the only way to rearrange / reorder the columns 
+selected for display is via dragging them within the righthand sid box titled 
+"Displayed columns" in the Settings.Appearance screen, as the actual column 
+headers are not themselves draggable (unlike the Qt version).  Therefore, I 
+added a note in the Settings screen informing users of this "feature".
+
+3) (Qt & Moonstone):  When right-clicking on a column header in the header-
+bar to add a column to display, the new column will now be inserted just 
+right of the column who's header was right-clicked on.  Previously new 
+columns were appended to the right of the right-most column.  Note:  This 
+won't add a column as the left-most column, but the "Now Playing" (status) 
+column should generally always be the left-most column.  To force a different 
+column to the leftmost position, simply drag it's header all the way to the 
+left.
+
+* Fix some Qt6 compiler warnings.
+
+* Update bug-reporting url from old Audacious redmine bug-tracker url to 
+our github's issues page url.  This also required a full Transiflex update to 
+correct it there as well.  This closes Issue# 21.
+
+* Skins (both GTK & Qt) - Overhauled numerous things to make them work much 
+better.  This was overdue as I haven't used the Skins interfaces for a few 
+years now!  This all started when I attempted to address Audacious feature-
+request #1513, sent them a patch, and they redid it resulting in not only 
+satisfying that request, but also fixing an (unknown to me at the time) long-
+standing issue in how Audacious handled the old Winamp "OAIDU" menu-column of 
+buttons.  This prompted me to look more in-depth into how this "should" be 
+handled.  Since this had been "broken" for some time, I decided to add a new  
+config. option to either use the "fixed & now-correct" ("Xmms") appearance or 
+retain the long-standing Audacious ("Legacy") appearance (which even I think 
+looks better on some of my and some Audacious-created skins), which I found 
+also contain a separate hints file called "skin-classic.hints".  With some 
+more tinkering & experimenting, I ended up needing to add a new hint option 
+called "MainWinStreamInfoLabels" to deal with some "Classic" (WinAMP-2) 
+skins displayed using the new "Classic Hints" config. option that don't 
+include the bitrate & frequency abbreviations on the main window image.
+
+In addition, I discovered that due to recent changes in the Qt main-window 
+menus setup (see mains commit# 9403ee "Make playlist shortcuts require 
+playlist focus", which has the bad side-effect of making most of the keyboard 
+shortcuts defined for the skins menus not work now) necessitating re-defining 
+most of them for the main window itself (in the playlist-widget).
+
+To summarize, the main changes / improvements to the Skins interfaces are:
+
+1) 2 new "Appearance" options:  "Use Classic skin hints, if available" and 
+"Winamp [OAIDU] menustyle:".  
+
+2) By default, the [OAIDU] menu, aka. the "clutterbar" is now always shown, 
+instead of hidden (on most skins) until clicked or moused on ("Xmms" option).
+Select "Legacy" for the old (hidden unless moused on) appearance.  Either way 
+though, we now always show the state of the two "togglable" menu-options 
+("A" and "D") as either "pressed" or "unpressed" (to address Audacious 
+request# 1513) regardless of which option is chosen.
+
+3) The default for "Display active titlebar when any window is focused" is 
+now FALSE, as it should be more beneficial for most users to see which skins 
+window has keyboard focus, as some bindings (namely the up & down arrows) now 
+do different things depending on whether the main or playlist window has focus. 
+If TRUE, Fauxdacious shows either all skins windows or none of them 
+as "focused" as a group based on whether any of them have keyboard focused.
+
+4) Tweaked the graphics and hints (skin[-classic].hints file(s)) for several of 
+the skins created by me or Audacious due to a few minor flaws in how they were 
+displayed that are somewhat more noticable to me now.  The Lavadacious (mine) 
+looks much better, especially the titlebars & buttons in unshaded mode.  I 
+also slightly adjusted the Default* skins (originally from Audacious) to now 
+include the "OAIDU" menu-column by default (use the new "Legacy" option to 
+hide it).
+
+5) Most skins have a little triangle/arrow that points right when playing and 
+a square or double-bar when stopped or paused respectively on the upper-left 
+part of the main window.  Just to the left of this indicator is another tiny 
+indicator, usually either an even tinier right-arrow or one, or two tiny 
+squares one above the other that never change, either in Xmms or Audacious, but 
+appear to be useful in indicating whether playback is set to continue (default) 
+or stop or repeat the current song.  Therefore, I've modified the skins logic 
+to display them in 1 of 3 states:  "Normal", "No Playlist Advance" (bottom 
+indicator) and "Stop After This Song" (top indicator changes, in skins that 
+support this).
+
+6) Added main-window bindings for the [Up] & [Down] arrows to make it much 
+easier to quickly change the volume (previously they moved the active row in 
+the playlist window up and down, and still do if the playlist window has the 
+keyboard focus).
+
+7) (Re)Added most of the main menu keyboard shortcuts to the main-window 
+key-bindings such that they're bound to both the main and playlist windows.
+
+8) Fixed the [Shift-[Tab]] binding to actually work now (both Qt & GTK).  
+This had apparently never worked.  Supposed to move the playlist screen to 
+show the previous playlist (if multiple playlists are defined).
+
+9) Found & fixed a cpl. main-window notifications to be more consistant.
+
+10) Add new skin (WinAMP v2.9 default skin).
+
+11) Fix failure of the "shaded" version of the playlist window to always 
+display (ie. stay in sync with) the proper title (of the currently-playing 
+song, if any), as it did not update when song title changed in streaming 
+radio-stations, or when "rolled up" (shaded from an unshaded state).  
+Seems to have been long-broken since Audacious.
+
+* Add a GTK version of the recently-added Qt-only Playback-History plugin!
+Includes all the features in the Fauxdacious-enhanced version plus the ability 
+to select (highlight) all history-entries (by pressing Ctrl-a), and pasting 
+the list of highlighted entries (titles or albums) into another app. perhaps 
+to save to a text file!  TODO:  Add these two features to the Qt verson too.
+
+* Merged in all Audacious bug-fixes & feature enhancements since v4.4.2-final 
+release.  Details below:
+
+* Prevent user from overwriting existing playlist when importing a playlist - 
+We automatically create a new playlist containing the imported list unless the 
+current/active playlist is empty, ie. newly-created.  This addresses 
+Audacious issue# 1508 ("Avoid Audacious overwriting/replacing current playlist 
+with imported one").
+
+* Merged: Added Vumeter plugin to GTK versions (already in Qt versions).
+
+* Merged: Added new Playback-History plugin to Qt versions.  Also enhance by 
+adding an option to also report song metadata changes by streaming 
+radio-stations.
+
+* Merged: Fixed memory leaks in Jump-to-Song dialog window and other code-
+cleanups and efficiencies found by Audacious sysbot affecting aac plugin, 
+blur-scope, etc.
+
+* Added some hotkeys & icons for Cut/Copy/Paste & a few other menu items.
+
+* Note:  We did NOT remove the Moonstone(Qt) plugin from Fauxdacious, nor do we 
+have any current intentions to do so in the future!
+
+Additional Fauxdacious changes:
+
+* Added "J" hotkey & menu entries for the Jump-to-Song dialog to various other 
+places where it could be very useful, ie. Mini-Fauxdacious, Moonstone, & the 
+main Qt playback menus.
+
+* Added option to the new Playback-History(Qt) plugin to better record song/
+album changes dynamically occuring in streaming radio-stations.
+
+Version 4.4.2-final [Updated 12/17/2024]:
+
+This release is mostly to merge numerous Audacious fixes/tweaks under the hood, 
+but also a couple specific to Fauxdacious, along with a shiny new feature we 
+added to the Lyrics plugins, but otherwise, mostly minor bugfixes & code 
+touchups all over.  The gory details below (see commits list since v4.4-final 
+for even gorier details). ;)  This release is mostly equivalent to Audacious 
+version 4.5-devel.
+
+Also note that this is the first release without a MS-Windows binary build, as 
+I'm not able/willing to upgrade / overhaul my entire Windows build environment 
+to that now used by Audacious and because I'm not a MS-Windows user.  I need 
+someone who is and wishes to keep Fauxdacious for Windows relavent, to please 
+step up and take over the Windows binary builds for me!  The last one 
+(v4.4-final) is and will remain available for the forseeable future though!
+
+* Cover Art Helper - Tweak a regular expression that sometimes failed cover-art 
+fetching if the song's title or album name included parentheses.
+
+* URL Helper - Add "hls_bandwidth=###" (kbps) option to the 
+FauxdaciousUrlHelper.ini file for manually limiting the highest bandwidth 
+stream selected by the FFAudio plugin (for users with limited bandwidth 
+internet connections) as many HLS streams offer very high bandwidth streams 
+now as their default (best) streams and the ffmpeg library does not appear 
+to have an option to force selection of a lower-bandwidth stream when 
+used programatically.
+
+* Because nearly all .m3u8 entries these days are HLS streams & require 
+the URL helper script to handle, no longer handle these as playlists via the 
+M3u plugin (if problem, users should rename or symlink with .m3u extension & 
+report here).
+
+* Merged: Handle fonts whose font family names contain digits properly.
+
+* Merged: Remove any white-space bracketing URLs added via the URL opener 
+dialog.
+
+* Pulseaudio - Specify properties for application ID and icon name.  This 
+allows Pavucontrol for example to display the Fauxdacious icon instead of a 
+general fallback icon. (Audacious)  Also correct previously wrong default 
+stream name to "Fauxdacious" (was always "Audacious").
+
+* Opus:  ReplayGain values for Opus files are now supported in both R128_* 
+and REPLAYGAIN_* tags. (Audacious feature request #1500)
+
+* FFAudio:  Added .adx file extension to entension list directly handled by 
+ffaudio plugin. (Audacious feature request# 1466)
+
+* Lyrics:  Merge in pull-request #4 by "lecheel" (https://github.com/lecheel) 
+that adds an option to display lyrics data that includes "timestamps" in a 
+dynamic display of three lines of lyrics at a time (previous, current & next) 
+lines with current line highlighted (larger text) synced between each 
+timestamp and the current playing position in the song entry.  The new option 
+is on (checked) by default under Lyric plugin configuration as:  
+"Enable scrolling lyric sync. by timestamps".  If the option is unchecked, OR 
+if lyrics data does not include timestamps, then lyrics are displayed in their 
+entirity, headed up by the song title & artist (as has always been the case).
+Also added an "About" section.  These changes apply to all Qt & GTK versions 
+of the Lyrics plugins.
+
+* Several Audacious fixes/tweaks for Mac users merged.
+
+* Numerous general code cleanups from Audacious.
+
+Audacious changes omitted, deferred or non-applicable:
+
+* Pipewire plugin changes - We currently do not include the Audacious Pipewire 
+plugin, as I believe the PulseAudio plugin can already handle Pipewire.  Since 
+I use neither Pulse nor Pipewire (I use Alsa sound), I have no way to test 
+either.  If this is no longer true, file a report & I'll be happy to merge the 
+Pipewire plugin.
+
+* Alternative build environments (ie. Mesa, et. al.) - We do not currently 
+support Meson building, as this would mean extensive changes and labor I'm not 
+willing to expend on my own, as now just merging in all of Audacious's .meson 
+files alone would not work due to numerous differences in our code-bases & I 
+have zero-familiarity with meson (Pull requests WITH PATCHES welcome)! ;)
+
+* libcddb build requirement - Audacious has removed this at the request of 
+FreeBSD (Audacious request #1437) as archaic.  Upon attempting to remove this, 
+I realized that we require it's ability to generate CD disk-IDs for use as 
+keys to custom user-created metadata files (a feature Audacious does not 
+offer).  I an not rejecting this outright, but deferring it for now until I can 
+figure out a workable solution.  In other words, this is going to require alot 
+more labor here than it did for Audacious (patches from FreeBSD'ers welcome)!  
+
+Version 4.4-final [Updated 07/27/2024]:
 
 * Welp, ONE DAY after this build was released, Youtube decided to screw up 
 their streams necessitating a quick hotfix update for StreamFinder to enable 
@@ -16,6 +289,10 @@ youtube-dl => "yt-dlp"
 format => "b"
 # if that fails, then try fetching best audio-only stream:
 format-fallback => "ba"
+
+NOTE:  non-Windows users:  You will just need to update (or install) yt-dlp and 
+the StreamFinder perl module to latest versions, and edit (or create) your 
+~/.config/StreamFinder/Youtube/config file to include the lines above!
 
 * I've also gone ahead and included the latest GTK commit that makes toggling 
 to classic icons on the Settings screen work without having to close and reopen 
@@ -79,7 +356,7 @@ update them, and I've seen essentially zero uptake or interest in Fauxdacious
 for Windows. :(  Therefore, if you are using Fauxdacious on your Windows daily 
 driver machine - PLEASE drop me a line letting me know you are using and 
 appreciate it.  If I find there are actually USERS, I'll strongly consider 
-continuing building.  Just need to know my labor is accomplishing something!  
+continuing building.  Just need to know my labor is not in vain!  
 Otherwise, v4.4-final will likely be the FINAL official Windows release!
 
 Version 4.4-beta1
